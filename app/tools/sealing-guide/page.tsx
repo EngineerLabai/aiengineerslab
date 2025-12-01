@@ -3,7 +3,7 @@
 
 import { useMemo, useState } from "react";
 
-type Media = "oil" | "fuel" | "water" | "steam" | "coolant" | "food" | "air";
+type Media = "oil" | "fuel" | "water" | "steam" | "chem" | "food" | "air";
 type Temp = "low" | "mid" | "high";
 type Pressure = "low" | "mid" | "high";
 
@@ -157,6 +157,7 @@ const MEDIA_LABELS: Record<Media, string> = {
   fuel: "Yakıt",
   chem: "Kimyasal",
   food: "Gıda/Hijyen",
+  air: "Hava",
 };
 
 const TEMP_LABELS: Record<Temp, string> = {
