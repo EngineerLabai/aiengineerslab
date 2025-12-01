@@ -3,7 +3,7 @@
 
 import { useMemo, useState } from "react";
 
-type Media = "oil" | "water" | "steam" | "fuel" | "chem" | "food";
+type Media = "oil" | "fuel" | "water" | "steam" | "coolant" | "food" | "air";
 type Temp = "low" | "mid" | "high";
 type Pressure = "low" | "mid" | "high";
 

@@ -130,8 +130,8 @@ function OeeBlock() {
         <div className="mt-3">
           <ResultRow label="OEE" value={`${(res.oee * 100).toFixed(2)} %`} />
           <p className="mt-1 text-[11px] text-slate-600">
-            Hızlı değerlendirme: < 60% zayıf, 60-75% orta, 75-85% iyi, >85% dünya klası (genel
-            kural). Kayıp analizi için A/P/Q bileşenlerini ayrı izleyin.
+            Hızlı değerlendirme: &lt; 60% zayıf, 60-75% orta, 75-85% iyi, &gt; 85% dünya klası
+            (genel kural). Kayıp analizi için A/P/Q bileşenlerini ayrı izleyin.
           </p>
         </div>
       ) : (
@@ -281,3 +281,4 @@ function ResultRow({ label, value }: { label: string; value: string }) {
     </div>
   );
 }
+
