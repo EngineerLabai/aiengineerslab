@@ -1,65 +1,115 @@
-import Image from "next/image";
+// app/page.tsx
+import Link from "next/link";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="space-y-6">
+      {/* Giriş kartı */}
+      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <h1 className="text-xl font-semibold text-slate-900 mb-2">
+          AIEngineersLab
+        </h1>
+
+        <p className="text-sm text-slate-700 mb-4">
+          Otomotiv, mekanik tasarım, üretim, kalite ve malzeme bilimi
+          alanlarında mühendisler için hesaplayıcılar, tablolar ve teknik
+          araçlar sunan bir platform.
+        </p>
+
+        <ul className="list-disc list-inside text-sm text-slate-700 space-y-1 mb-4">
+          <li>Cıvata / vida boyut ve tolerans hesaplayıcıları</li>
+          <li>Malzeme (çelik, alüminyum, elastomer) bilgi kartları</li>
+          <li>Gerilme, tork ve dayanım hesaplayıcıları</li>
+          <li>Kalite araçları: 5N1K, 5 Why, FMEA iskeletleri</li>
+          <li>
+            Üretim ve proses hesaplamaları (tork, gerilme, emniyet katsayıları)
+          </li>
+        </ul>
+
+        <p className="text-sm text-slate-600">
+          Şu anda aktif araçlar:{" "}
+          <strong>Cıvata Boyut Hesaplayıcı</strong>,{" "}
+          <strong>Malzeme Bilgi Kartları</strong> ve{" "}
+          <strong>Çekme Gerilmesi Hesaplayıcı</strong>.
+        </p>
+      </section>
+
+      {/* Araç kartları */}
+      <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-2">
+        <ToolCard
+          title="Cıvata Boyut Hesaplayıcı"
+          description="Nominal çap, diş adımı ve kaliteye göre cıvata boyutlarını ve temel değerleri hesapla."
+          href="/tools/bolt-calculator"
+          variant="primary"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+
+        <ToolCard
+          title="Malzeme Bilgi Kartları"
+          description="Çelik, alüminyum ve elastomer malzemeler için temel mekanik özellik ve kullanım alanları."
+          href="/tools/material-cards"
+          variant="outline"
+        />
+
+        <ToolCard
+          title="Çekme Gerilmesi Hesaplayıcı"
+          description="Kuvvet ve kesit alanına göre gerilmeyi ve emniyet katsayısını hızlıca hesapla."
+          href="/tools/simple-stress"
+          variant="dark"
+        />
+
+        <ToolCard
+          title="Standart Cıvata Veri Merkezi"
+          description="Standart cıvata boyutları, diş profilleri ve gerilme alanları için referans veri tabanı."
+          href="/tools/bolt-database"
+          variant="neutral"
+        />
+
+        <ToolCard
+          title="Proje Mühendisleri Alanı"
+          description="Müşteri projeleri, hat iyileştirmeleri ve Kaizen çalışmalarını kayıt altına al ve takip et."
+          href="/project-hub"   // 🔴 ÖNEMLİ: Artık /project-hub
+          variant="outline"
+        />
+      </section>
+    </div>
+  );
+}
+
+type ToolCardProps = {
+  title: string;
+  description: string;
+  href: string;
+  variant?: "primary" | "outline" | "dark" | "neutral";
+};
+
+function ToolCard({
+  title,
+  description,
+  href,
+  variant = "neutral",
+}: ToolCardProps) {
+  const baseClasses =
+    "inline-flex items-center justify-center rounded-full px-3 py-1.5 text-[11px] font-semibold transition";
+  const variantClasses = {
+    primary: "bg-slate-900 text-white hover:bg-slate-800",
+    outline:
+      "border border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white",
+    dark: "bg-slate-700 text-white hover:bg-slate-600",
+    neutral:
+      "border border-slate-300 text-slate-700 hover:bg-slate-100 hover:border-slate-400",
+  } as const;
+
+  return (
+    <div className="flex h-full flex-col justify-between rounded-2xl border border-slate-200 bg-white p-4 text-sm shadow-sm hover:border-slate-300 hover:shadow-md">
+      <div>
+        <h2 className="mb-1 text-sm font-semibold text-slate-900">{title}</h2>
+        <p className="text-xs text-slate-600">{description}</p>
+      </div>
+      <div className="mt-4">
+        <Link href={href} className={`${baseClasses} ${variantClasses[variant]}`}>
+          Aracı Aç
+        </Link>
+      </div>
     </div>
   );
 }
