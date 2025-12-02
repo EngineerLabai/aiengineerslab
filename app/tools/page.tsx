@@ -128,10 +128,10 @@ function ToolCard({
   const baseClasses =
     "inline-flex items-center justify-center rounded-full px-3 py-1.5 text-[11px] font-semibold transition";
   const variantClasses = {
-    primary: "bg-slate-900 text-white hover:bg-slate-800",
+    primary: "bg-sky-600 text-white hover:bg-sky-500",
     outline:
-      "border border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white",
-    dark: "bg-slate-700 text-white hover:bg-slate-600",
+      "border border-sky-600 text-sky-700 hover:bg-sky-50 hover:text-sky-800",
+    dark: "bg-sky-700 text-white hover:bg-sky-600",
     neutral:
       "border border-slate-300 text-slate-700 hover:bg-slate-100 hover:border-slate-400",
   } as const;

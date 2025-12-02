@@ -14,14 +14,17 @@ type OeeInputs = {
   quality: string; // %
 };
 
-type ToleranceInputs = {
-  dims: string; // comma-separated tolerances (mm)
-  method: "linear" | "rss";
+type PressInputs = {
+  thickness: string; // mm
+  perimeter: string; // mm
+  shear: string; // MPa
+  safety: string; // factor
 };
 
-type CpmInputs = {
-  activities: string; // comma-separated durations (days)
-  totalFloat: string; // assumed buffer %
+type PowerInputs = {
+  torque: string; // Nm
+  rpm: string; // rev/min
+  load: string; // load factor %
 };
 
 const TAKT_INIT: TaktInputs = {
@@ -35,14 +38,17 @@ const OEE_INIT: OeeInputs = {
   quality: "98",
 };
 
-const TOL_INIT: ToleranceInputs = {
-  dims: "0.05,0.02,0.03",
-  method: "rss",
+const PRESS_INIT: PressInputs = {
+  thickness: "2.0",
+  perimeter: "420",
+  shear: "320",
+  safety: "1.2",
 };
 
-const CPM_INIT: CpmInputs = {
-  activities: "5,3,4,2",
-  totalFloat: "20",
+const POWER_INIT: PowerInputs = {
+  torque: "180",
+  rpm: "1450",
+  load: "85",
 };
 
 export default function ProductionProjectPage() {
@@ -51,26 +57,122 @@ export default function ProductionProjectPage() {
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
         <div className="mb-3 flex items-center gap-2">
           <span className="rounded-full bg-slate-900 px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">
-            Üretim & Proje
+            Uretim & Proje
           </span>
           <span className="rounded-full bg-indigo-50 px-3 py-1 text-[10px] font-medium text-indigo-700">
-            Çoklu Hesap
+            Coklu Hesap
           </span>
         </div>
-        <h1 className="text-lg font-semibold text-slate-900">
-          Üretim & Proje Hızlı Paket
-        </h1>
-        <p className="mt-2 text-xs text-slate-600">
-          Öğrencilerin ve mezunların sık sorduğu 3 kısa hesap: (1) takt time, (2) OEE, (3)
-          tolerans yığılımı (lineer/RSS), (4) basit CPM süre + buffer tahmini. Hızlı fikir
-          vermek içindir; gerçek sahada detaylı çizelgeleme ve istatistik gerekir.
-        </p>
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center">
+          <div>
+            <h1 className="text-lg font-semibold text-slate-900">
+              Uretim & Proje Hizli Paket
+            </h1>
+            <p className="mt-2 text-xs text-slate-600">
+              Uretim icin hizli hesaplar: (1) takt time, (2) OEE, (3) pres tonaj tahmini, (4) motor guc/torque.
+              Hizli fikir verir; sahada detayli analiz ve verifikasyon sart.
+            </p>
+          </div>
+          <ProductionGraphic />
+        </div>
       </section>
 
       <TaktBlock />
       <OeeBlock />
-      <ToleranceBlock />
-      <CpmBlock />
+      <PressForceBlock />
+      <MotorPowerBlock />
+    </div>
+  );
+}
+
+function ProductionGraphic() {
+  const bars = [
+    { label: "Takt", value: 68 },
+    { label: "OEE", value: 82 },
+    { label: "Pres", value: 74 },
+    { label: "Guc", value: 88 },
+  ];
+
+  return (
+    <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br from-indigo-50 via-white to-slate-50 p-4 shadow-[0_12px_35px_-22px_rgba(15,23,42,0.4)]">
+      <div className="mb-3 flex items-center justify-between">
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-indigo-700">Hizli gorsellestirme</p>
+          <p className="text-[11px] text-slate-600">Takt/OEE/pres/guc nabzi</p>
+        </div>
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-600 text-[11px] font-semibold text-white">
+          Ops
+        </div>
+      </div>
+      <div className="relative flex h-28 items-end gap-2">
+        {bars.map((b, idx) => (
+          <div key={b.label} className="flex flex-1 flex-col items-center gap-1">
+            <div
+              className="prod-bar w-full rounded-md bg-indigo-500/80"
+              style={{ height: `${b.value}%`, animationDelay: `${idx * 0.2}s` }}
+              title={`${b.label} ${b.value}%`}
+            />
+            <span className="text-[10px] font-medium text-slate-700">{b.label}</span>
+          </div>
+        ))}
+      </div>
+      <svg viewBox="0 0 220 70" className="mt-3 h-16 w-full text-indigo-500">
+        <defs>
+          <linearGradient id="prodLine" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#6366f1" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0.8" />
+          </linearGradient>
+        </defs>
+        <polyline
+          points="10,55 45,35 80,50 120,25 160,38 200,18"
+          fill="none"
+          stroke="url(#prodLine)"
+          strokeWidth="4"
+          strokeLinecap="round"
+          className="prod-flow"
+        />
+        <polyline
+          points="10,55 45,35 80,50 120,25 160,38 200,18"
+          fill="none"
+          stroke="#cbd5e1"
+          strokeWidth="6"
+          strokeLinecap="round"
+          strokeDasharray="4 8"
+          opacity="0.6"
+        />
+      </svg>
+      <style jsx>{`
+        @keyframes prodRise {
+          0% {
+            transform: scaleY(0.35);
+            opacity: 0.55;
+          }
+          50% {
+            transform: scaleY(1);
+            opacity: 1;
+          }
+          100% {
+            transform: scaleY(0.65);
+            opacity: 0.7;
+          }
+        }
+        @keyframes prodFlow {
+          0% {
+            stroke-dashoffset: 120;
+          }
+          100% {
+            stroke-dashoffset: 0;
+          }
+        }
+        .prod-bar {
+          transform-origin: bottom;
+          animation: prodRise 3.2s ease-in-out infinite;
+        }
+        .prod-flow {
+          stroke-dasharray: 4 8;
+          animation: prodFlow 3s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 }
@@ -141,108 +243,79 @@ function OeeBlock() {
   );
 }
 
-function ToleranceBlock() {
-  const [inp, setInp] = useState<ToleranceInputs>(TOL_INIT);
+function PressForceBlock() {
+  const [inp, setInp] = useState<PressInputs>(PRESS_INIT);
 
   const res = useMemo(() => {
-    const parts = inp.dims
-      .split(",")
-      .map((v) => Number(v.trim()))
-      .filter((v) => !Number.isNaN(v) && v > 0);
-    if (!parts.length) return null;
-    const linear = parts.reduce((a, b) => a + b, 0);
-    const rss = Math.sqrt(parts.reduce((a, b) => a + b * b, 0));
-    const tol = inp.method === "linear" ? linear : rss;
-    return { linear, rss, tol, method: inp.method };
+    const t = Number(inp.thickness);
+    const p = Number(inp.perimeter);
+    const tau = Number(inp.shear);
+    const sf = Number(inp.safety);
+    if (t <= 0 || p <= 0 || tau <= 0 || sf <= 0) return null;
+    const forceN = p * t * tau * sf; // N (MPa = N/mm^2)
+    const forcekN = forceN / 1000;
+    const tonf = forceN / 9810;
+    return { forceN, forcekN, tonf };
   }, [inp]);
 
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-5 text-xs shadow-sm">
-      <h2 className="mb-3 text-sm font-semibold text-slate-900">3) Tolerans Yığılımı</h2>
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        <Field
-          label="Toleranslar (mm, virgülle)"
-          value={inp.dims}
-          onChange={(v) => setInp({ ...inp, dims: v })}
-          helper="Örn: 0.05, 0.02, 0.03"
-        />
-        <label className="space-y-1">
-          <span className="block text-[11px] font-medium text-slate-700">Metot</span>
-          <select
-            value={inp.method}
-            onChange={(e) => setInp({ ...inp, method: e.target.value as "linear" | "rss" })}
-            className="w-full rounded-lg border border-slate-300 px-2 py-1.5 text-xs outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900/40"
-          >
-            <option value="rss">RSS (kareler toplamı)</option>
-            <option value="linear">Lineer toplama</option>
-          </select>
-        </label>
+      <h2 className="mb-3 text-sm font-semibold text-slate-900">3) Pres Tonaj Tahmini (kesme)</h2>
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <Field label="Kalinlik t (mm)" value={inp.thickness} onChange={(v) => setInp({ ...inp, thickness: v })} />
+        <Field label="Kesim cevresi P (mm)" value={inp.perimeter} onChange={(v) => setInp({ ...inp, perimeter: v })} />
+        <Field label="Kesme dayanimi (MPa)" value={inp.shear} onChange={(v) => setInp({ ...inp, shear: v })} />
+        <Field label="Emniyet kats." value={inp.safety} onChange={(v) => setInp({ ...inp, safety: v })} />
       </div>
       {res ? (
         <div className="mt-3 grid gap-2 sm:grid-cols-3">
-          <ResultRow label="Lineer toplam" value={`${res.linear.toFixed(3)} mm`} />
-          <ResultRow label="RSS toplam" value={`${res.rss.toFixed(3)} mm`} />
-          <ResultRow
-            label="Seçili yöntem"
-            value={`${res.method === "rss" ? "RSS" : "Lineer"} = ${res.tol.toFixed(3)} mm`}
-          />
+          <ResultRow label="F (kN)" value={res.forcekN.toFixed(1)} />
+          <ResultRow label="F (tonf)" value={res.tonf.toFixed(2)} />
+          <ResultRow label="F (N)" value={res.forceN.toFixed(0)} />
         </div>
       ) : (
-        <p className="mt-2 text-[11px] text-red-600">Pozitif sayılar gir.</p>
+        <p className="mt-2 text-[11px] text-red-600">Pozitif degerler gir.</p>
       )}
       <p className="mt-2 text-[11px] text-slate-600">
-        Not: RSS, bağımsız ve merkezlenmiş toleranslar için uygundur. Sistematik kayma
-        varsa lineer toplama veya istatistiksel faktörler kullanılmalıdır.
+        Not: Kesme icin kullanilir. Delme/blanking icin P, parcanin kesim cevresidir; malzeme kesme dayanimi datasheet'ten alinmalidir.
       </p>
     </section>
   );
 }
 
-function CpmBlock() {
-  const [inp, setInp] = useState<CpmInputs>(CPM_INIT);
+function MotorPowerBlock() {
+  const [inp, setInp] = useState<PowerInputs>(POWER_INIT);
 
   const res = useMemo(() => {
-    const acts = inp.activities
-      .split(",")
-      .map((v) => Number(v.trim()))
-      .filter((v) => !Number.isNaN(v) && v > 0);
-    if (!acts.length) return null;
-    const duration = acts.reduce((a, b) => a + b, 0); // basit seri kritik yol varsayımı
-    const bufferPct = Number(inp.totalFloat);
-    const buffer = bufferPct > 0 ? (duration * bufferPct) / 100 : 0;
-    const total = duration + buffer;
-    return { duration, buffer, total, bufferPct };
+    const T = Number(inp.torque);
+    const n = Number(inp.rpm);
+    const load = Number(inp.load);
+    if (T <= 0 || n <= 0 || load <= 0) return null;
+    const p_kw = (T * n) / 9550;
+    const p_loaded = p_kw * (load / 100);
+    const omega = (2 * Math.PI * n) / 60;
+    return { p_kw, p_loaded, omega };
   }, [inp]);
 
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-5 text-xs shadow-sm">
-      <h2 className="mb-3 text-sm font-semibold text-slate-900">4) Basit CPM Süre Tahmini</h2>
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        <Field
-          label="Aktivite süreleri (gün, virgülle)"
-          value={inp.activities}
-          onChange={(v) => setInp({ ...inp, activities: v })}
-          helper="Örn: 5,3,4,2"
-        />
-        <Field
-          label="Buffer / toplam float [%]"
-          value={inp.totalFloat}
-          onChange={(v) => setInp({ ...inp, totalFloat: v })}
-          helper="Basit pay; gerçek CPM için ağ modeli gerekir"
-        />
+      <h2 className="mb-3 text-sm font-semibold text-slate-900">4) Motor Guc/Tork</h2>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Field label="Tork (Nm)" value={inp.torque} onChange={(v) => setInp({ ...inp, torque: v })} />
+        <Field label="Devir (rpm)" value={inp.rpm} onChange={(v) => setInp({ ...inp, rpm: v })} />
+        <Field label="Yukleme [%]" value={inp.load} onChange={(v) => setInp({ ...inp, load: v })} helper="Tipik: 70-90%" />
       </div>
       {res ? (
         <div className="mt-3 grid gap-2 sm:grid-cols-3">
-          <ResultRow label="Kritik yol (toplam süre)" value={`${res.duration.toFixed(1)} gün`} />
-          <ResultRow label="Buffer" value={`${res.buffer.toFixed(1)} gün`} />
-          <ResultRow label="Toplam süre" value={`${res.total.toFixed(1)} gün`} />
+          <ResultRow label="P (kW)" value={res.p_kw.toFixed(2)} />
+          <ResultRow label="P (kW) - yukte" value={res.p_loaded.toFixed(2)} />
+          <ResultRow label="omega (rad/s)" value={res.omega.toFixed(1)} />
         </div>
       ) : (
-        <p className="mt-2 text-[11px] text-red-600">Pozitif sayılar gir.</p>
+        <p className="mt-2 text-[11px] text-red-600">Pozitif degerler gir.</p>
       )}
       <p className="mt-2 text-[11px] text-slate-600">
-        Not: Bu hesap çok basittir (seri görev varsayımı). Gerçek CPM/PERT için ağ ilişkileri
-        ve olasılıklı süreler modele dahil edilmelidir.
+        Not: P[kW] = T[Nm] x n[rpm] / 9550. Servis faktorleri ve verim icin motor datasina bak.
       </p>
     </section>
   );
@@ -281,4 +354,3 @@ function ResultRow({ label, value }: { label: string; value: string }) {
     </div>
   );
 }
-

@@ -249,6 +249,8 @@ export default function SealingGuidePage() {
         </div>
       </section>
 
+
+            <SealGraphic />
       <section className="rounded-2xl border border-slate-200 bg-white p-5 text-xs shadow-sm">
         <h3 className="mb-2 text-sm font-semibold text-slate-900">Hızlı Notlar</h3>
         <ul className="list-disc space-y-1 pl-4 text-[11px] text-slate-700">
@@ -258,7 +260,86 @@ export default function SealingGuidePage() {
           <li>Yüksek basınçta O-ring ekstrüzyonu için back-up ring ve uygun boşluk seç.</li>
         </ul>
       </section>
+
+      
     </div>
+  );
+}
+
+function SealGraphic() {
+  return (
+    <section className="rounded-2xl border border-slate-200 bg-gradient-to-br from-emerald-50 via-white to-slate-50 p-5 text-xs shadow-sm">
+      <div className="mb-3 flex items-center justify-between">
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-emerald-700">Conta kesiti</p>
+          <p className="text-[11px] text-slate-600">Basit sizdirmazlik ve akis gorsellestirmesi</p>
+        </div>
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-600 text-[11px] font-semibold text-white">
+          PSI
+        </div>
+      </div>
+      <svg viewBox="0 0 280 120" className="w-full">
+        <defs>
+          <linearGradient id="sealBody" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#d1fae5" />
+            <stop offset="100%" stopColor="#bae6fd" />
+          </linearGradient>
+          <radialGradient id="sealCore" cx="50%" cy="50%" r="70%">
+            <stop offset="0%" stopColor="#22c55e" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0.6" />
+          </radialGradient>
+        </defs>
+        <rect x="15" y="46" width="250" height="52" rx="10" fill="url(#sealBody)" stroke="#cbd5e1" strokeWidth="2" />
+        <rect x="32" y="62" width="90" height="24" rx="6" fill="#94a3b8" opacity="0.65" />
+        <rect x="140" y="62" width="70" height="24" rx="6" fill="#94a3b8" opacity="0.5" />
+        <circle className="seal-pulse" cx="210" cy="72" r="16" fill="url(#sealCore)" stroke="#059669" strokeWidth="3" />
+        <path
+          className="seal-flow"
+          d="M35 40 C 90 52, 150 34, 230 46"
+          fill="none"
+          stroke="#10b981"
+          strokeWidth="4"
+          strokeLinecap="round"
+        />
+        <path d="M32 46 L32 92" stroke="#0f172a" strokeWidth="3" strokeLinecap="round" opacity="0.3" />
+        <path d="M245 46 L245 92" stroke="#0f172a" strokeWidth="3" strokeLinecap="round" opacity="0.3" />
+      </svg>
+      <p className="mt-2 text-[11px] text-slate-600">
+        Bu eskizi tedarikci verisiyle destekleyin: yuzey puruzluluk, sikma torku, sicaklik ve basinc cok kritiktir.
+      </p>
+      <style jsx>{`
+        @keyframes sealPulse {
+          0% {
+            transform: scale(0.92);
+            opacity: 0.65;
+          }
+          50% {
+            transform: scale(1.05);
+            opacity: 1;
+          }
+          100% {
+            transform: scale(0.92);
+            opacity: 0.65;
+          }
+        }
+        @keyframes sealFlow {
+          0% {
+            stroke-dashoffset: 42;
+          }
+          100% {
+            stroke-dashoffset: 0;
+          }
+        }
+        .seal-pulse {
+          transform-origin: center;
+          animation: sealPulse 3.2s ease-in-out infinite;
+        }
+        .seal-flow {
+          stroke-dasharray: 10 10;
+          animation: sealFlow 2.6s ease-in-out infinite;
+        }
+      `}</style>
+    </section>
   );
 }
 

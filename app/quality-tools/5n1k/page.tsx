@@ -12,6 +12,12 @@ type FiveN1KForm = {
   how: string;    // Nasıl?
 };
 
+type SavedSummary = {
+  id: number;
+  summary: string;
+  form: FiveN1KForm;
+};
+
 const INITIAL_FORM: FiveN1KForm = {
   what: "",
   where: "",
@@ -23,12 +29,31 @@ const INITIAL_FORM: FiveN1KForm = {
 
 export default function FiveN1KPage() {
   const [form, setForm] = useState<FiveN1KForm>(INITIAL_FORM);
+  const [savedSummaries, setSavedSummaries] = useState<SavedSummary[]>([]);
+  const [filterText, setFilterText] = useState("");
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   function handleChange(
     key: keyof FiveN1KForm,
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) {
     setForm((prev) => ({ ...prev, [key]: e.target.value }));
+  }
+
+  function handleSave() {
+    setSaveError(null);
+
+    if (Object.values(form).every((v) => !v.trim())) {
+      setSaveError("Kaydedilecek problem özeti yok. Lütfen alanları doldurun.");
+      return;
+    }
+
+    const summary = buildOneLineSummary(form);
+    setSavedSummaries((prev) => [
+      ...prev,
+      { id: prev.length + 1, summary, form },
+    ]);
+    setForm(INITIAL_FORM);
   }
 
   const isEmpty = Object.values(form).every((v) => !v.trim());
@@ -66,14 +91,27 @@ export default function FiveN1KPage() {
             <h2 className="text-sm font-semibold text-slate-900">
               5N1K Giriş Alanları
             </h2>
-            <button
-              type="button"
-              onClick={() => setForm(INITIAL_FORM)}
-              className="rounded-full border border-slate-300 px-3 py-1 text-[10px] font-medium text-slate-600 hover:bg-slate-50"
-            >
-              Formu Temizle
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handleSave}
+                className="rounded-full bg-slate-900 px-3 py-1 text-[10px] font-semibold text-white hover:bg-slate-800"
+              >
+                Kaydet
+              </button>
+              <button
+                type="button"
+                onClick={() => setForm(INITIAL_FORM)}
+                className="rounded-full border border-slate-300 px-3 py-1 text-[10px] font-medium text-slate-600 hover:bg-slate-50"
+              >
+                Formu Temizle
+              </button>
+            </div>
           </div>
+
+          {saveError && (
+            <p className="mb-2 text-[11px] text-red-600">{saveError}</p>
+          )}
 
           <div className="grid gap-3 md:grid-cols-2">
             {/* What */}
@@ -169,7 +207,15 @@ export default function FiveN1KPage() {
         </div>
 
         {/* Özet paneli */}
-        <FiveN1KSummaryCard form={form} isEmpty={isEmpty} />
+        <div className="space-y-4">
+          <FiveN1KSummaryCard form={form} isEmpty={isEmpty} />
+          <SavedSummariesList
+            items={savedSummaries}
+            filterText={filterText}
+            onFilterTextChange={setFilterText}
+          />
+          <PremiumExportNotice />
+        </div>
       </section>
     </div>
   );
@@ -254,6 +300,111 @@ function FiveN1KSummaryCard({ form, isEmpty }: SummaryProps) {
         </li>
       </ul>
     </aside>
+  );
+}
+
+type SavedSummariesProps = {
+  items: SavedSummary[];
+  filterText: string;
+  onFilterTextChange: (value: string) => void;
+};
+
+function SavedSummariesList({
+  items,
+  filterText,
+  onFilterTextChange,
+}: SavedSummariesProps) {
+  const normalizedQuery = filterText.trim().toLowerCase();
+  const filtered =
+    normalizedQuery.length === 0
+      ? items
+      : items.filter((item) => {
+          const haystack = [
+            item.summary,
+            item.form.what,
+            item.form.where,
+            item.form.when,
+            item.form.who,
+            item.form.why,
+            item.form.how,
+          ]
+            .join(" ")
+            .toLowerCase();
+          return haystack.includes(normalizedQuery);
+        });
+
+  return (
+    <aside className="rounded-2xl border border-slate-200 bg-white p-5 text-xs shadow-sm">
+      <div className="mb-2 flex items-center justify-between gap-2">
+        <h3 className="text-sm font-semibold text-slate-900">
+          Kaydedilen Problem Özetleri
+        </h3>
+        <input
+          type="text"
+          value={filterText}
+          onChange={(e) => onFilterTextChange(e.target.value)}
+          placeholder="Özetlerde ara..."
+          className="w-40 rounded-lg border border-slate-300 px-2 py-1 text-[11px] text-slate-700 outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900/40"
+        />
+      </div>
+
+      {filtered.length === 0 ? (
+        <p className="text-[11px] text-slate-500">
+          Henüz kaydedilmiş problem özeti yok veya filtreye uyan sonuç bulunamadı.
+        </p>
+      ) : (
+        <ol className="space-y-2 text-[11px] text-slate-700">
+          {filtered.map((item, idx) => (
+            <li
+              key={item.id}
+              className="flex items-start gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2"
+            >
+              <span className="mt-[2px] inline-flex h-5 w-5 items-center justify-center rounded-full bg-slate-900 text-[10px] font-semibold text-white">
+                {idx + 1}
+              </span>
+              <div className="space-y-1">
+                <p className="font-medium text-slate-900">{item.summary}</p>
+                <p className="text-[10px] text-slate-500">
+                  Ne: {item.form.what || "-"} · Nerede: {item.form.where || "-"} · Ne
+                  zaman: {item.form.when || "-"} · Kim: {item.form.who || "-"}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      )}
+    </aside>
+  );
+}
+
+function PremiumExportNotice() {
+  return (
+    <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-[11px] text-amber-900 shadow-sm">
+      <h3 className="mb-1 text-sm font-semibold">
+        PDF / Excel&apos;e Aktar – Premium Özellik
+      </h3>
+      <p className="mb-2">
+        5N1K problem tanımlama kayıtlarını PDF veya Excel olarak dışa aktarma
+        ve ekiplerle paylaşma özelliği <strong>Premium üyelik</strong> kapsamında
+        planlanmaktadır.
+      </p>
+      <div className="flex gap-2">
+        <button
+          type="button"
+          disabled
+          className="flex-1 rounded-full border border-amber-300 px-3 py-1.5 font-semibold text-amber-700 opacity-60"
+        >
+          PDF&apos;e Aktar (Premium)
+        </button>
+        <button
+          type="button"
+          disabled
+          className="flex-1 rounded-full border border-amber-300 px-3 py-1.5 font-semibold text-amber-700 opacity-60"
+        >
+          Excel&apos;e Aktar (Premium)
+        </button>
+      </div>
+    </div>
   );
 }
 

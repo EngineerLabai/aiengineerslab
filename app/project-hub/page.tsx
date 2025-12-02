@@ -28,6 +28,14 @@ export default function ProjectHubPage() {
 
       {/* Alt modüller kartları */}
       <section className="grid gap-4 md:grid-cols-2">
+        {/* Devreye alma paneli */}
+        <HubCard
+          title="Devreye Alma Paneli"
+          description="Komisyoning adimlari: hazirlik, temizlik, torklama, on test, sicak/soguk cevrim, loglama."
+          href="/project-hub/devreye-alma"
+          badge="Yeni"
+        />
+
         {/* Yeni Proje / İyileştirme */}
         <HubCard
           title="Yeni Proje / İyileştirme Takip Paneli"
@@ -80,7 +88,7 @@ function HubCard({ title, description, href, badge }: HubCardProps) {
       <div className="mt-3">
         <Link
           href={href}
-          className="inline-flex items-center rounded-full bg-slate-900 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-slate-800"
+          className="inline-flex items-center rounded-full bg-sky-600 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-sky-500"
         >
           Modülü Aç
         </Link>

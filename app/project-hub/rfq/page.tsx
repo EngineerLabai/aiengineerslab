@@ -14,7 +14,13 @@ type RfqItem = {
   status: "Açık" | "Çalışılıyor" | "Kapatıldı";
 };
 
-type StatusFilter = "all" | "Açık" | "Çalışılıyor" | "Kapatıldı";
+type StatusFilter = "all" | RfqItem["status"];
+
+const STATUS_OPTIONS: RfqItem["status"][] = [
+  "Açık",
+  "Çalışılıyor",
+  "Kapatıldı",
+];
 
 let nextId = 1;
 
@@ -75,6 +81,12 @@ export default function RfqSummaryPage() {
 
   function handleDelete(id: number) {
     setItems((prev) => prev.filter((item) => item.id !== id));
+  }
+
+  function handleStatusChange(id: number, status: RfqItem["status"]) {
+    setItems((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, status } : item)),
+    );
   }
 
   const filteredItems =
@@ -196,9 +208,11 @@ export default function RfqSummaryPage() {
                   }
                   className="w-full rounded-lg border border-slate-300 px-2 py-1.5 text-xs outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900/40"
                 >
-                  <option value="Açık">Açık</option>
-                  <option value="Çalışılıyor">Çalışılıyor</option>
-                  <option value="Kapatıldı">Kapatıldı</option>
+                  {STATUS_OPTIONS.map((status) => (
+                    <option key={status} value={status}>
+                      {status}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -290,7 +304,28 @@ export default function RfqSummaryPage() {
                       </p>
                     )}
 
-                    <div className="mt-1 flex justify-end">
+                    <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-medium text-slate-600">
+                          Durumu değiştir
+                        </span>
+                        <select
+                          value={item.status}
+                          onChange={(e) =>
+                            handleStatusChange(
+                              item.id,
+                              e.target.value as RfqItem["status"],
+                            )
+                          }
+                          className="rounded-lg border border-slate-300 bg-white px-2 py-1 text-[10px] text-slate-700 outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900/40"
+                        >
+                          {STATUS_OPTIONS.map((status) => (
+                            <option key={status} value={status}>
+                              {status}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                       <button
                         type="button"
                         onClick={() => handleDelete(item.id)}
@@ -346,9 +381,7 @@ type StatusFilterChipsProps = {
 function StatusFilterChips({ value, onChange }: StatusFilterChipsProps) {
   const options: { value: StatusFilter; label: string }[] = [
     { value: "all", label: "Tümü" },
-    { value: "Açık", label: "Açık" },
-    { value: "Çalışılıyor", label: "Çalışılıyor" },
-    { value: "Kapatıldı", label: "Kapatıldı" },
+    ...STATUS_OPTIONS.map((status) => ({ value: status, label: status })),
   ];
 
   return (

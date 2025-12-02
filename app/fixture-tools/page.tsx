@@ -126,7 +126,7 @@ export default function FixtureToolsPage() {
                 {tool.href && (
                   <Link
                     href={tool.href}
-                    className="rounded-full bg-slate-900 px-3 py-1 font-semibold text-white hover:bg-slate-800"
+                    className="rounded-full bg-sky-600 px-3 py-1 font-semibold text-white hover:bg-sky-500"
                   >
                     Modülü Aç
                   </Link>
