@@ -21,7 +21,7 @@ const FIXTURE_TOOLS: FixtureTool[] = [
     description:
       "Fikstür taban plakası kalınlığı, sertliği ve bağlama noktaları için temel mühendislik notları ve checklist.",
     useCases: [
-      "Yeni fikstür tasarımında taban plaka kalınlığını seçme",
+      "Yeni fikstürde taban plaka kalınlığını seçme",
       "Bağlama cıvatalarının yerleşimini kabaca kontrol etme",
       "Makine tablası oluk / T-slot uyumluluğu notları",
     ],
@@ -34,11 +34,7 @@ const FIXTURE_TOOLS: FixtureTool[] = [
     label: "Clamping",
     description:
       "Parçanın nereden ve kaç noktadan sıkılacağını, reaksiyon noktalarını ve emniyet katsayısını planlamak için basit bir şablon.",
-    useCases: [
-      "Kıskaç (clamp) sayısını ve yerini belirleme",
-      "Aşırı deformasyon riskini azaltma",
-      "Kuvvet yolunu (force path) kabaca düşünme",
-    ],
+    useCases: ["Kıskaç (clamp) sayısını ve yerini belirleme", "Aşırı deformasyon riskini azaltma", "Kuvvet yolunu (force path) kabaca düşünme"],
     status: "beta",
     href: "/fixture-tools/clamping",
   },
@@ -60,69 +56,59 @@ const FIXTURE_TOOLS: FixtureTool[] = [
 
 export default function FixtureToolsPage() {
   return (
-    <div className="space-y-6">
-      {/* Başlık ve genel açıklama */}
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-        <div className="mb-3 flex items-center gap-2">
-          <span className="rounded-full bg-slate-900 px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">
-            Kalıp / Fikstür Araçları
-          </span>
-          <span className="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-medium text-slate-600">
-            Taban plaka · Sıkma noktaları · Referanslama
-          </span>
+    <div className="space-y-8">
+      <section className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(56,189,248,0.08),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(59,130,246,0.08),transparent_24%)]" />
+        <div className="relative space-y-3">
+          <div className="inline-flex items-center gap-2 rounded-full border border-sky-100 bg-sky-50 px-3 py-1 text-[11px] text-sky-700 md:text-xs">
+            <span className="font-semibold">Kalıp / Fikstür Araçları</span>
+            <span className="hidden text-slate-500 sm:inline">Taban plaka · Sıkma · Referanslama</span>
+          </div>
+          <h1 className="text-balance text-2xl font-semibold leading-snug text-slate-900 md:text-3xl">
+            Fikstür ve kalıp tasarımında sık kullanılan notlar ve şablonlar
+          </h1>
+          <p className="text-sm leading-relaxed text-slate-700">
+            Taban plaka boyutlandırma notları, sıkma / bağlama planı ve 3-2-1 prensibine göre referanslama
+            şemaları. Şimdilik hepsi free; ileride PDF/Excel çıktıları ve gelişmiş hesaplayıcılar premium’a
+            taşınabilir.
+          </p>
         </div>
-
-        <h1 className="text-lg font-semibold text-slate-900">
-          Kalıp &amp; Fikstür Tasarım Araçları Paneli
-        </h1>
-        <p className="mt-2 text-xs text-slate-600">
-          Bu bölümde, fikstür ve kalıp tasarımında en çok ihtiyaç duyulan konular
-          için hafif dijital araçlar planlıyoruz: taban plakası boyutlandırma
-          notları, sıkma / bağlama planı ve 3-2-1 prensibine göre referanslama
-          şemaları. Şimdilik hepsi free; ileride PDF/Excel çıktısı ve gelişmiş
-          hesaplayıcılar premium pakete taşınabilir.
-        </p>
       </section>
 
-      {/* Araç kartları */}
       <section className="grid gap-4 md:grid-cols-2">
         {FIXTURE_TOOLS.map((tool) => (
           <article
             key={tool.id}
-            className="flex h-full flex-col justify-between rounded-2xl border border-slate-200 bg-white p-4 text-xs shadow-sm hover:border-slate-300 hover:shadow-md"
+            className="flex h-full flex-col justify-between rounded-3xl border border-slate-200 bg-white p-4 text-xs shadow-sm hover:border-slate-300 hover:shadow-md"
           >
-            <div>
-              <header className="mb-2 flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
-                  <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
+            <div className="space-y-2">
+              <header className="flex items-start justify-between gap-2">
+                <div className="flex min-w-0 items-center gap-2">
+                  <span className="rounded-full bg-sky-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-sky-700">
                     {tool.label}
                   </span>
-                  <h2 className="text-sm font-semibold text-slate-900">
-                    {tool.name}
-                  </h2>
+                  <h2 className="text-sm font-semibold leading-snug text-slate-900 break-words">{tool.name}</h2>
                 </div>
                 <FixtureStatusBadge status={tool.status} />
               </header>
 
-              <p className="mb-2 text-[11px] text-slate-700">
-                {tool.description}
-              </p>
+              <p className="text-[11px] leading-relaxed text-slate-700 break-words">{tool.description}</p>
 
               <div>
-                <p className="mb-1 text-[11px] font-semibold text-slate-800">
-                  Tipik kullanım alanları:
-                </p>
-                <ul className="list-inside list-disc text-[11px] text-slate-700">
+                <p className="mb-1 text-[11px] font-semibold text-slate-800">Tipik kullanım alanları:</p>
+                <ul className="list-inside list-disc space-y-1 text-[11px] text-slate-700">
                   {tool.useCases.map((u) => (
-                    <li key={u}>{u}</li>
+                    <li key={u} className="break-words">
+                      {u}
+                    </li>
                   ))}
                 </ul>
               </div>
             </div>
 
-            <footer className="mt-3 flex items-center justify-between text-[11px] text-slate-500">
+            <footer className="mt-3 flex items-center justify-between gap-2 text-[11px] text-slate-500">
               <div className="flex items-center gap-2">
-                <span>Free Şablon</span>
+                <span className="text-slate-600">Free şablon</span>
                 {tool.href && (
                   <Link
                     href={tool.href}
@@ -133,9 +119,7 @@ export default function FixtureToolsPage() {
                 )}
               </div>
               <span className="rounded-full bg-slate-100 px-2 py-0.5">
-                {tool.status === "beta"
-                  ? "Etkileşimli form açık"
-                  : "Yakında etkileşimli form"}
+                {tool.status === "beta" ? "Etkileşimli form açık" : "Yakında etkileşimli form"}
               </span>
             </footer>
           </article>

@@ -124,7 +124,7 @@ export default function RootLayout({
       >
         <div className="flex min-h-screen flex-col bg-[radial-gradient(circle_at_20%_20%,rgba(100,116,139,0.05),transparent_30%),radial-gradient(circle_at_80%_0%,rgba(16,185,129,0.05),transparent_25%)]">
           <header className="border-b border-slate-200 bg-white/80 backdrop-blur">
-            <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+            <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
               <Link href="/" className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-800 text-sm font-black text-white shadow-sm">
                   AI
@@ -162,7 +162,7 @@ export default function RootLayout({
             </div>
 
             <div className="border-t border-slate-100 bg-white/80 px-4 py-2 lg:hidden">
-              <div className="mx-auto flex max-w-6xl flex-wrap gap-2">
+              <div className="mx-auto flex max-w-7xl flex-wrap gap-2">
                 {navSections.slice(0, 3).map((section) => (
                   <Link
                     key={section.label}
@@ -177,7 +177,7 @@ export default function RootLayout({
           </header>
 
           <main className="flex-1">
-            <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6 lg:flex-row">
+            <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-6 lg:flex-row">
               <aside className="lg:w-64 lg:shrink-0">
                 <div className="sticky top-4 space-y-3 text-xs">
                   {sidebarSections.map((section) => (

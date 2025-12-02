@@ -328,7 +328,7 @@ export default function HomePage() {
               <span>Otomotiv ve ağır vasıta odaklı mühendislik platformu</span>
             </div>
 
-            <h1 className="text-balance text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl lg:text-5xl">
+            <h1 className="text-balance text-3xl font-semibold leading-tight tracking-tight text-slate-900 md:text-4xl lg:text-[44px]">
               Hesaplayıcılar, şablonlar ve rehberlerle
               <span className="block bg-gradient-to-r from-sky-600 via-sky-500 to-blue-500 bg-clip-text text-transparent">
                 mühendislik işini hızlandır.
@@ -367,9 +367,9 @@ export default function HomePage() {
         {/* Sağ taraf mini özet kartı */}
         <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
           <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2 text-slate-800">
+            <div className="flex min-w-0 items-center gap-2 text-slate-800">
               <BarChart3 className="h-4 w-4 text-sky-600" />
-              <span className="text-sm font-semibold">Hızlı Bakış Paneli</span>
+              <span className="text-sm font-semibold leading-snug break-words">Hızlı Bakış Paneli</span>
             </div>
             <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600">
               Beta
@@ -377,29 +377,29 @@ export default function HomePage() {
           </div>
 
           <div className="mt-4 space-y-3 text-sm text-slate-700">
-            <div className="flex items-center justify-between">
-              <span>Cıvata & Diş Araçları</span>
-              <span className="font-semibold text-sky-700">7+ araç</span>
+            <div className="flex items-center justify-between gap-2">
+              <span className="min-w-0 break-words">Cıvata & Diş Araçları</span>
+              <span className="shrink-0 font-semibold text-sky-700">7+ araç</span>
             </div>
-            <div className="flex items-center justify-between">
-              <span>Mekanik Hesaplayıcılar</span>
-              <span className="font-semibold text-sky-700">5+ araç</span>
+            <div className="flex items-center justify-between gap-2">
+              <span className="min-w-0 break-words">Mekanik Hesaplayıcılar</span>
+              <span className="shrink-0 font-semibold text-sky-700">5+ araç</span>
             </div>
-            <div className="flex items-center justify-between">
-              <span>Proje & Kalite Şablonları</span>
-              <span className="font-semibold text-sky-700">10+ şablon</span>
+            <div className="flex items-center justify-between gap-2">
+              <span className="min-w-0 break-words">Proje & Kalite Şablonları</span>
+              <span className="shrink-0 font-semibold text-sky-700">10+ şablon</span>
             </div>
           </div>
 
-          <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-3">
-            <div className="flex items-center justify-between text-[12px] text-slate-800">
-              <span>AI asistan desteği</span>
-              <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">
-                Yakında
-              </span>
-            </div>
-            <p className="mt-2 text-[12px] text-slate-600">
-              Hesap sonuçlarını yorumlayan ve projene göre öneri veren yapay zeka asistanı entegrasyonu
+            <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-3">
+              <div className="flex items-center justify-between gap-2 text-[12px] text-slate-800">
+                <span>AI asistan desteği</span>
+                <span className="shrink-0 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">
+                  Yakında
+                </span>
+              </div>
+              <p className="mt-2 text-[12px] text-slate-600">
+                Hesap sonuçlarını yorumlayan ve projene göre öneri veren yapay zeka asistanı entegrasyonu
               planlanıyor.
             </p>
           </div>
@@ -419,11 +419,11 @@ export default function HomePage() {
           {popularTools.map((tool) => (
             <div
               key={tool.name}
-              className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-3.5 py-3 text-sm shadow-sm"
+              className="flex items-start justify-between gap-3 rounded-2xl border border-slate-200 bg-white px-3.5 py-3 text-sm shadow-sm"
             >
-              <div>
+              <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="font-semibold text-slate-900">{tool.name}</span>
+                  <span className="font-semibold text-slate-900 break-words">{tool.name}</span>
                   {tool.isPremium && (
                     <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-700">
                       Premium
@@ -436,7 +436,7 @@ export default function HomePage() {
                   <span>{tool.type}</span>
                 </div>
               </div>
-              <ArrowUpRight className="h-4 w-4 text-slate-400" />
+              <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-slate-400" />
             </div>
           ))}
         </div>
@@ -457,11 +457,11 @@ export default function HomePage() {
               className="flex flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"
             >
               <div className="flex items-start justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-50">
+                <div className="flex min-w-0 items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-50">
                     {cat.icon}
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <h3 className="text-base font-semibold leading-snug text-slate-900 break-words">
                       {cat.title}
                     </h3>
@@ -492,8 +492,10 @@ export default function HomePage() {
                     key={item.name}
                     className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2.5"
                   >
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-sm font-semibold text-slate-900 break-words">{item.name}</span>
+                    <div className="flex items-start justify-between gap-2">
+                      <span className="flex-1 min-w-0 text-sm font-semibold leading-snug text-slate-900 break-words">
+                        {item.name}
+                      </span>
                       {item.isPremium && (
                         <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-700">
                           Premium
