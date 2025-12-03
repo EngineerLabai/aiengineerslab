@@ -71,6 +71,11 @@ const navSections: NavSection[] = [
       { label: "Fikstür & Aparat", href: "/fixture-tools" },
     ],
   },
+  {
+    label: "Dişli Hesaplamaları ve Dişli Tasarım İncelikleri",
+    description: "Düz/helis dişli hesapları ve tasarım notları (taslak).",
+    links: [{ label: "Dişli Hesaplamaları", href: "/tools/gear-design", badge: "Yeni" }],
+  },
 ];
 
 type SidebarSection = {
@@ -109,6 +114,10 @@ const sidebarSections: SidebarSection[] = [
       { label: "Kalite Araçları", href: "/quality-tools" },
       { label: "Fikstür Araçları", href: "/fixture-tools" },
     ],
+  },
+  {
+    label: "Dişli Hesaplamaları",
+    links: [{ label: "Dişli Hesaplamaları ve Tasarım İncelikleri", href: "/tools/gear-design" }],
   },
 ];
 

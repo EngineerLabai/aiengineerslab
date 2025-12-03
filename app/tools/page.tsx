@@ -83,6 +83,14 @@ const tools: ToolCardProps[] = [
     description: "Takt/OEE hızlı hesap, tolerans yayılımı ve CPM süre/float tahmini.",
     href: "/tools/production-project",
   },
+  {
+    title: "Dişli Hesaplamaları ve Tasarım İncelikleri",
+    description:
+      "Düz/helis dişliler için Ft/Fr/Fa yükleri, modül ve oran seçimi ile malzeme/yağlama notlarının ekleneceği taslak sayfa. Şimdilik geliştiriliyor.",
+    href: "/tools/gear-design",
+    badge: "Geliştiriliyor",
+    variant: "outline",
+  },
 ];
 
 export default function ToolsIndexPage() {
