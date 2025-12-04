@@ -32,49 +32,46 @@ type NavSection = {
 
 const navSections: NavSection[] = [
   {
-    label: "Cıvata & Tork",
-    description: "Standart tablolar, tork değerleri ve hızlı hesaplayıcılar.",
+    label: "Hesaplayıcılar",
+    description: "Dişli, tork, kuvvet ve mekanik hesap araçları.",
     links: [
-      { label: "Merkez Ana Sayfa", href: "/tools/bolt-database" },
-      { label: "Boyut & Temel Değer Hesabı", href: "/tools/bolt-calculator" },
-      { label: "Tork & Güç Dönüşümü", href: "/tools/torque-power" },
-      { label: "Basit Gerilme Hesabı", href: "/tools/simple-stress" },
+      { label: "Dişli hesaplayıcıları", href: "/tools/gear-design/calculators", badge: "Yeni" },
+      { label: "Mekanik hesaplamalar", href: "/tools" },
+      { label: "Tork / Güç", href: "/tools/torque-power" },
     ],
   },
   {
-    label: "Malzeme & Kaplama",
-    description: "Malzeme kartları, ısıl işlem ve kaplama rehberleri.",
+    label: "Araçlar",
+    description: "Şablon, rehber ve proje araçları.",
     links: [
-      { label: "Malzeme Kartları", href: "/tools/material-cards" },
-      { label: "Isıl İşlem Rehberi", href: "/tools/heat-treatment" },
-      { label: "Kaplama Rehberi", href: "/tools/coating-guide" },
-      { label: "Sızdırmazlık Rehberi", href: "/tools/sealing-guide" },
+      { label: "Proje alanı", href: "/project-hub", badge: "Güncel" },
+      { label: "Kalite araçları", href: "/quality-tools" },
+      { label: "Fikstür & aparat", href: "/fixture-tools" },
     ],
   },
   {
-    label: "Mekanik Hesaplar",
-    description: "Mukavemet, makine elemanları ve proses hesapları.",
+    label: "Forum",
+    description: "Topluluk tartışmaları ve paylaşımlar.",
     links: [
-      { label: "Mekanik Hesaplamalar", href: "/tools" },
-      { label: "Bükülme / Eğilme", href: "/tools/bending-stress" },
-      { label: "Makine Elemanları", href: "/tools/machine-elements" },
-      { label: "Statik & Dayanım", href: "/tools/strength-statics" },
+      { label: "Topluluk", href: "#" },
+      { label: "Soru-cevap", href: "#" },
     ],
   },
   {
-    label: "Proje & Kalite",
-    description: "Proje takibi, kalite metodları ve fikstür araçları.",
+    label: "Mühendise Sor",
+    description: "Hızlı teknik destek ve mini danışmanlık.",
     links: [
-      { label: "Proje Mühendisliği Alanı", href: "/project-hub", badge: "Yeni" },
-      { label: "Kalite Araçları", href: "/quality-tools" },
-      { label: "Üretim / Proses Projeleri", href: "/tools/production-project" },
-      { label: "Fikstür & Aparat", href: "/fixture-tools" },
+      { label: "Hızlı inceleme", href: "#" },
+      { label: "Toplantı planla", href: "#" },
     ],
   },
   {
-    label: "Dişli Hesaplamaları ve Dişli Tasarım İncelikleri",
-    description: "Düz/helis dişli hesapları ve tasarım notları (taslak).",
-    links: [{ label: "Dişli Hesaplamaları", href: "/tools/gear-design", badge: "Yeni" }],
+    label: "İletişim",
+    description: "Geri bildirim ve destek kanalları.",
+    links: [
+      { label: "İletişim formu", href: "#" },
+      { label: "Geri bildirim", href: "#" },
+    ],
   },
 ];
 
@@ -85,30 +82,21 @@ type SidebarSection = {
 
 const sidebarSections: SidebarSection[] = [
   {
-    label: "Genel Başlangıç",
+    label: "Genel",
     links: [
       { label: "Ana Sayfa", href: "/" },
+      { label: "Hesaplayıcılar", href: "/tools/gear-design/calculators" },
+    ],
+  },
+  {
+    label: "Hesaplayıcılar",
+    links: [
+      { label: "Dişli hesaplamaları", href: "/tools/gear-design/calculators" },
       { label: "Mekanik Hesaplamalar", href: "/tools" },
     ],
   },
   {
-    label: "Cıvata & Tork",
-    links: [
-      { label: "Cıvata Veri Merkezi", href: "/tools/bolt-database" },
-      { label: "Boyut Hesaplayıcı", href: "/tools/bolt-calculator" },
-      { label: "Tork & Güç", href: "/tools/torque-power" },
-    ],
-  },
-  {
-    label: "Malzeme & Kaplama",
-    links: [
-      { label: "Malzeme Kartları", href: "/tools/material-cards" },
-      { label: "Isıl İşlem", href: "/tools/heat-treatment" },
-      { label: "Kaplama Rehberi", href: "/tools/coating-guide" },
-    ],
-  },
-  {
-    label: "Proje & Kalite",
+    label: "Araçlar",
     links: [
       { label: "Proje Alanı", href: "/project-hub" },
       { label: "Kalite Araçları", href: "/quality-tools" },
@@ -116,8 +104,16 @@ const sidebarSections: SidebarSection[] = [
     ],
   },
   {
-    label: "Dişli Hesaplamaları",
-    links: [{ label: "Dişli Hesaplamaları ve Tasarım İncelikleri", href: "/tools/gear-design" }],
+    label: "Forum",
+    links: [{ label: "Topluluk", href: "#" }],
+  },
+  {
+    label: "Mühendise Sor",
+    links: [{ label: "Teknik destek", href: "#" }],
+  },
+  {
+    label: "İletişim",
+    links: [{ label: "Bize ulaşın", href: "#" }],
   },
 ];
 
@@ -128,9 +124,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr">
-      <body
-        className={`${raleway.variable} ${jetBrainsMono.variable} antialiased bg-slate-50 text-slate-900`}
-      >
+      <body className={`${raleway.variable} ${jetBrainsMono.variable} antialiased bg-slate-50 text-slate-900`}>
         <div className="flex min-h-screen flex-col bg-[radial-gradient(circle_at_20%_20%,rgba(100,116,139,0.05),transparent_30%),radial-gradient(circle_at_80%_0%,rgba(16,185,129,0.05),transparent_25%)]">
           <header className="border-b border-slate-200 bg-white/80 backdrop-blur">
             <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
@@ -139,12 +133,8 @@ export default function RootLayout({
                   AI
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs font-semibold uppercase tracking-[0.08em] text-slate-500">
-                    AI Engineers Lab
-                  </span>
-                  <span className="text-sm font-semibold text-slate-900">
-                    Açık ve minimal mühendislik platformu
-                  </span>
+                  <span className="text-xs font-semibold uppercase tracking-[0.08em] text-slate-500">AI Engineers Lab</span>
+                  <span className="text-sm font-semibold text-slate-900">Açık ve minimal mühendislik platformu</span>
                 </div>
               </Link>
 
@@ -202,8 +192,7 @@ export default function RootLayout({
                   <div className="rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm backdrop-blur">
                     <h2 className="mb-1 text-sm font-semibold text-slate-900">Mühendise Sor</h2>
                     <p className="mb-3 text-[11px] leading-relaxed text-slate-600">
-                      Cıvata, tork, malzeme veya fikstür tasarımında takıldığın noktalar için teknik
-                      destek iste.
+                      Cıvata, tork, malzeme veya fikstür tasarımında takıldığın noktalar için teknik destek iste.
                     </p>
                     <button className="w-full rounded-full bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-emerald-500">
                       Teknik destek talebi oluştur
@@ -211,7 +200,7 @@ export default function RootLayout({
                   </div>
 
                   <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm backdrop-blur">
-                    <h2 className="mb-1 text-sm font-semibold text-slate-900">Premium üyelik</h2>
+                    <h2 className="mb-1 text-sm font-semibold text-slate-900">Premium Üyelik</h2>
                     <ul className="list-disc space-y-1 pl-4 text-[11px] text-slate-600">
                       <li>Detaylı tork ve diş tabloları</li>
                       <li>Gelişmiş mekanik hesaplayıcılar</li>

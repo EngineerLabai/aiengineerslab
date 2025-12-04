@@ -92,187 +92,77 @@ type Category = {
 
 const categories: Category[] = [
   {
-    id: "bolt-thread",
-    title: "Cıvata · Diş · Tork Merkezi",
-    subtitle: "Bağlantı Elemanları Mühendisliği",
+    id: "calculators",
+    title: "Hesaplayıcılar",
+    subtitle: "Mühendislik hızlı hesaplar",
     description:
-      "Metrik, UNC/UNF, diş toleransları, sıkma torkları ve ön yük hesapları. Tasarımdan montaja kadar bağlantı elemanı süreci tek yerde.",
+      "Dişli, tork, kuvvet, ısı, akış ve boyutlandırma hesaplarını saniyeler içinde çözüme ulaştır.",
     level: "intermediate",
-    badge: "Yeni içerikler ekleniyor",
-    icon: <Wrench className="h-6 w-6 text-sky-600" />,
-    items: [
-      {
-        name: "Diş Standartları Kütüphanesi",
-        description:
-          "Metrik, UNC/UNF, Whitworth ve özel diş formlarının hızlı karşılaştırması ve seçim tablosu.",
-      },
-      {
-        name: "Sıkma Torku Hesaplayıcı",
-        description:
-          "Sürtünme katsayısı, yağlama durumu ve cıvata kalitesine göre önerilen tork hesapları.",
-        isPremium: true,
-      },
-      {
-        name: "Cıvata Seçim Asistanı",
-        description:
-          "Yük, emniyet katsayısı ve yer kısıtlarına göre cıvata boyut ve kalite önerisi.",
-        isPremium: true,
-      },
-    ],
-  },
-  {
-    id: "material-heat",
-    title: "Malzeme · Isıl İşlem · Kaplama Merkezi",
-    subtitle: "Doğru malzeme, doğru proses",
-    description:
-      "Çelik, alüminyum ve döküm malzemelerin mekanik özellikleri, ısıl işlem kombinasyonları ve yüzey kaplama rehberi.",
-    level: "intermediate",
-    icon: <Layers className="h-6 w-6 text-sky-600" />,
-    items: [
-      {
-        name: "Malzeme Karşılaştırma Aracı",
-        description:
-          "CK75 - CK67, 50CrV4, EN-AW 5754, 6013 gibi malzemeleri mekanik özelliklere göre kıyasla.",
-      },
-      {
-        name: "Isıl İşlem Sonrası Sertlik Tahmini",
-        description:
-          "Çöstenitleme, temperleme ve süneklik gereksinimlerine göre hedef sertlik aralıkları.",
-        isPremium: true,
-      },
-      {
-        name: "Kaplama Seçim Rehberi",
-        description:
-          "Korozyon, sürtünme, maliyet ve proses kabiliyetine göre uygun kaplama önerileri (Zn, ZnNi, fosfat vb.).",
-        isPremium: true,
-      },
-    ],
-  },
-  {
-    id: "mechanical-calcs",
-    title: "Mekanik Hesaplayıcılar",
-    subtitle: "Eğilme · Torsiyon · CC hesapları",
-    description:
-      "Günlük tasarım ve doğrulama işlerini hızlandıracak, sahada da ofiste de kullanabileceğin hesaplama araçları.",
-    level: "beginner",
+    badge: "Güncel",
     icon: <Calculator className="h-6 w-6 text-sky-600" />,
     items: [
-      {
-        name: "Eğilme Gerilmesi Hesaplayıcı",
-        description:
-          "Basit kirişler için eğilme momenti, gerilme ve emniyet katsayısı hesapları.",
-      },
-      {
-        name: "Torsiyon Hesaplayıcı",
-        description:
-          "Mil çapı, tork ve malzeme dayanımına göre güvenli tasarım kontrolü.",
-      },
-      {
-        name: "Hacimsel CC Hesaplayıcı",
-        description: "Kompresör ve pnömatik elemanlar için cc hesabı ve optimizasyonu.",
-        isPremium: true,
-      },
+      { name: "Dişli ve tahrik", description: "Modül, oran, Ft/Fr/Fa, helis ve backlash hesapları." },
+      { name: "Tork ve kuvvet", description: "Motor gücü, tork, eksenel/radyal yük tahminleri." },
+      { name: "Isı / akış", description: "Temel ısı, enerji veya akış hesapları için kısayollar." },
     ],
   },
   {
-    id: "project-engineering",
-    title: "Proje Mühendisleri Alanı",
-    subtitle: "APQP · PPAP · FMEA · Kaizen",
-    description:
-      "Seri devreye alma, müşteri projeleri ve fabrika içi iyileştirme çalışmalarını sistematik yönetmek için hazır şablonlar.",
-    level: "advanced",
-    badge: "Pro paket önerilir",
-    icon: <Target className="h-6 w-6 text-sky-600" />,
-    items: [
-      {
-        name: "APQP Yol Haritası Aracı",
-        description: "Adım adım proje fazları, sorumlu matrisleri ve teslimat listeleri.",
-        isPremium: true,
-      },
-      {
-        name: "FMEA Şablonları",
-        description: "Tasarım ve proses FMEA için pratik, otomotiv uyumlu şablon seti.",
-        isPremium: true,
-      },
-      {
-        name: "Kaizen Takip Panosu",
-        description: "İyileştirme fikirlerini topla, puanla ve hayata geçirme sürecini izle.",
-        isPremium: true,
-      },
-    ],
-  },
-  {
-    id: "quality-tools",
-    title: "Kalite Araçları",
-    subtitle: "Problem çözme ve kök neden analizi",
-    description:
-      "5N1K, 5 Why, Ishikawa, 8D ve daha fazlası için hazır template ve örneklerle yalın problem çözme.",
-    level: "beginner",
-    icon: <Gauge className="h-6 w-6 text-sky-600" />,
-    items: [
-      {
-        name: "8D Rapor Asistanı",
-        description: "Müşteriye gönderilecek 8D raporlarını adım adım doldurmanı sağlar.",
-        isPremium: true,
-      },
-      {
-        name: "5N1K & 5 Why Panosu",
-        description: "Takım çalışmaların için dijital beyaz tahta şablonları.",
-      },
-      {
-        name: "Kontrol Planı Başlangıç Seti",
-        description: "Seri üretim projeleri için hızlı kontrol planı oluşturma şablonları.",
-      },
-    ],
-  },
-  {
-    id: "tooling-fixtures",
-    title: "Kalıp · Fikstür Araçları",
-    subtitle: "Sac kalıp ve fikstür tasarımına giriş",
-    description:
-      "EN-AW 5754, 6013 gibi malzemelerle çalışan sac kalıplar ve montaj fikstürleri için pratik rehberler.",
+    id: "tools",
+    title: "Araçlar",
+    subtitle: "Pratik mühendislik yardımcıları",
+    description: "Fikstür, üretim, malzeme ve proje araçları; kontrol listeleri ve şablonlar tek yerde.",
     level: "intermediate",
-    icon: <Layers className="h-6 w-6 text-sky-600" />,
+    badge: "Yeni içerikler",
+    icon: <Briefcase className="h-6 w-6 text-amber-600" />,
     items: [
-      {
-        name: "Sac Kalıp Malzeme Rehberi",
-        description: "İşlev, maliyet ve proses kabiliyetine göre sac malzeme seçimi.",
-      },
-      {
-        name: "Fikstür Tasarım Kontrol Listesi",
-        description: "İş güvenliği, ergonomi ve tekrarlanabilirlik için olmazsa olmaz maddeler.",
-      },
-      {
-        name: "Tolerans & Rulman Yatak Rehberi",
-        description: "Rulman yatak toleransları ve yüzey kalitesi gereksinimlerine görsel açıklamalar.",
-        isPremium: true,
-      },
+      { name: "Fikstür ve bağlama", description: "Konumlandırma, sıkma ve taban plaka rehberleri." },
+      { name: "Üretim notları", description: "Kaplama, ısıl işlem, tolerans ve süreç şablonları." },
+      { name: "Proje araçları", description: "RFQ, parça takibi ve devreye alma kontrol listeleri." },
     ],
   },
   {
-    id: "career-center",
-    title: "Mühendislik Kariyer Merkezi",
-    subtitle: "Öğrenciden proje mühendisine giden yol",
+    id: "forum",
+    title: "Forum",
+    subtitle: "Topluluk ve deneyim paylaşımı",
     description:
-      "CV, LinkedIn, portföy ve proje önerileriyle, öğrenciden otomotiv ve ağır vasıta dünyasına hazırlayan bir kariyer alanı.",
+      "Diğer mühendislerle soru-cevap, ipuçları ve alan tecrübelerini paylaşmak için topluluk alanı.",
     level: "beginner",
-    badge: "Öğrenciler için",
-    icon: <Briefcase className="h-6 w-6 text-sky-600" />,
+    badge: "Yakında",
+    icon: <Layers className="h-6 w-6 text-purple-600" />,
     items: [
-      {
-        name: "Yetkinlik Yol Haritaları",
-        description: "Otomotiv, ağır vasıta ve Ar-Ge kariyer yolları için öğrenme haritaları.",
-      },
-      {
-        name: "CV & LinkedIn Şablonları",
-        description: "Mühendislik odaklı, ATS uyumlu CV ve profil yazım önerileri.",
-        isPremium: true,
-      },
-      {
-        name: "Bitirme & YL Tez Fikir Havuzu",
-        description: "Endüstriye dokunan tez ve proje konu önerileri (F1, süspansiyon, kompresör vb.).",
-        isPremium: true,
-      },
+      { name: "Soru-cevap", description: "Uygulama sorunlarını veya hesap sorularını tartış." },
+      { name: "İpucu arşivi", description: "Sahadan gelen pratik çözümler ve hızlandırıcılar." },
+      { name: "Kullanıcı galerisi", description: "Kendi çözüm ve şablonlarını paylaş." },
+    ],
+  },
+  {
+    id: "ask-engineer",
+    title: "Mühendise Sor",
+    subtitle: "Uzmandan hızlı yanıt",
+    description:
+      "Kritik tasarım, malzeme veya proses sorularında uzman desteği al; mini danışmanlık ve revizyon önerileri.",
+    level: "advanced",
+    badge: "1-1 destek",
+    icon: <Target className="h-6 w-6 text-emerald-600" />,
+    items: [
+      { name: "Hızlı inceleme", description: "Hesap veya çizim üzerinde kısa doğrulama." },
+      { name: "Revizyon önerisi", description: "Tasarım iyileştirme ve risk azaltma tavsiyeleri." },
+      { name: "Toplantı planla", description: "Kısa görüşme ile sorularını netleştir." },
+    ],
+  },
+  {
+    id: "contact",
+    title: "İletişim",
+    subtitle: "Geri bildirim ve destek",
+    description:
+      "Öneri, hata bildirimi veya iş birliği için doğrudan ulaş. İletişim kanallarını hızlıca seç.",
+    level: "beginner",
+    badge: "Açık",
+    icon: <Sparkles className="h-6 w-6 text-sky-600" />,
+    items: [
+      { name: "Geri bildirim", description: "Hata, istek veya iyileştirme önerilerini ilet." },
+      { name: "Destek talebi", description: "Teknik destek veya erişim sorunlarını bildir." },
+      { name: "İş birliği", description: "Eğitim, pilot veya entegrasyon için iletişime geç." },
     ],
   },
 ];
@@ -280,25 +170,25 @@ const categories: Category[] = [
 const popularTools = [
   {
     name: "Sıkma Torku Hesaplayıcı",
-    category: "Cıvata · Diş · Tork Merkezi",
+    category: "Hesaplayıcılar",
     type: "Hesaplayıcı",
     isPremium: true,
   },
   {
     name: "Malzeme Karşılaştırma Aracı",
-    category: "Malzeme · Isıl İşlem · Kaplama",
+    category: "Araçlar",
     type: "Rehber",
     isPremium: false,
   },
   {
     name: "Eğilme Gerilmesi Hesaplayıcı",
-    category: "Mekanik Hesaplayıcılar",
+    category: "Hesaplayıcılar",
     type: "Hesaplayıcı",
     isPremium: false,
   },
   {
     name: "APQP Yol Haritası Aracı",
-    category: "Proje Mühendisleri",
+    category: "Mühendise Sor",
     type: "Pro Aracı",
     isPremium: true,
   },
@@ -336,9 +226,8 @@ export default function HomePage() {
             </h1>
 
             <p className="mt-4 max-w-2xl text-sm text-slate-600 md:text-base">
-              AIEngineersLab, mühendislik öğrencileri ve sahada çalışan mühendisler için tasarlandı;
-              cıvata & diş çözümlerinden proje yönetimi ve kalite araçlarına kadar uzanan bir bilgi ve
-              araç kütüphanesi.
+              AIEngineersLab, mühendislik öğrencileri ve sahada çalışan mühendisler için tasarlandı; civata & dişli
+              çözümlerinden proje yönetimi ve kalite araçlarına kadar uzanan bir bilgi ve araç kütüphanesi.
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -347,7 +236,7 @@ export default function HomePage() {
                 <ArrowUpRight className="h-4 w-4" />
               </button>
               <button className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 transition hover:border-slate-400 hover:bg-slate-100">
-                Premium’a göz at
+                Premium'a göz at
               </button>
             </div>
 
@@ -364,21 +253,18 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Sağ taraf mini özet kartı */}
         <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
           <div className="flex items-center justify-between gap-2">
             <div className="flex min-w-0 items-center gap-2 text-slate-800">
               <BarChart3 className="h-4 w-4 text-sky-600" />
-              <span className="text-sm font-semibold leading-snug break-words">Hızlı Bakış Paneli</span>
+              <span className="break-words text-sm font-semibold leading-snug">Hızlı Bakış Paneli</span>
             </div>
-            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600">
-              Beta
-            </span>
+            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600">Beta</span>
           </div>
 
           <div className="mt-4 space-y-3 text-sm text-slate-700">
             <div className="flex items-center justify-between gap-2">
-              <span className="min-w-0 break-words">Cıvata & Diş Araçları</span>
+              <span className="min-w-0 break-words">Civata & Dişli Araçları</span>
               <span className="shrink-0 font-semibold text-sky-700">7+ araç</span>
             </div>
             <div className="flex items-center justify-between gap-2">
@@ -386,21 +272,20 @@ export default function HomePage() {
               <span className="shrink-0 font-semibold text-sky-700">5+ araç</span>
             </div>
             <div className="flex items-center justify-between gap-2">
-              <span className="min-w-0 break-words">Proje & Kalite Şablonları</span>
+              <span className="min-w-0 break-words">Proje & Kalite şablonları</span>
               <span className="shrink-0 font-semibold text-sky-700">10+ şablon</span>
             </div>
           </div>
 
-            <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-3">
-              <div className="flex items-center justify-between gap-2 text-[12px] text-slate-800">
-                <span>AI asistan desteği</span>
-                <span className="shrink-0 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">
-                  Yakında
-                </span>
-              </div>
-              <p className="mt-2 text-[12px] text-slate-600">
-                Hesap sonuçlarını yorumlayan ve projene göre öneri veren yapay zeka asistanı entegrasyonu
-              planlanıyor.
+          <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-3">
+            <div className="flex items-center justify-between gap-2 text-[12px] text-slate-800">
+              <span>AI asistan desteği</span>
+              <span className="shrink-0 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">
+                Yakında
+              </span>
+            </div>
+            <p className="mt-2 text-[12px] text-slate-600">
+              Hesap sonuçlarını yorumlayan ve projene göre öneri veren yapay zeka asistanının entegrasyonu planlanıyor.
             </p>
           </div>
         </div>
@@ -423,7 +308,7 @@ export default function HomePage() {
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="font-semibold text-slate-900 break-words">{tool.name}</span>
+                  <span className="break-words font-semibold text-slate-900">{tool.name}</span>
                   {tool.isPremium && (
                     <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-700">
                       Premium
@@ -446,8 +331,7 @@ export default function HomePage() {
       <section id="categories" className="space-y-3">
         <h2 className="text-base font-semibold text-slate-900">Tüm kategoriler</h2>
         <p className="text-sm text-slate-600">
-          Ücretsiz olarak göz atabilir, detaylı hesaplayıcılar ve şablonlar için Premium’a geçiş
-          yapabilirsin.
+          Ücretsiz olarak göz atabilir, detaylı hesaplayıcılar ve şablonlar için Premium'a göz at yapabilirsin.
         </p>
 
         <div className="mt-4 grid gap-5 lg:grid-cols-1 xl:grid-cols-2">
@@ -462,12 +346,8 @@ export default function HomePage() {
                     {cat.icon}
                   </div>
                   <div className="min-w-0">
-                    <h3 className="text-base font-semibold leading-snug text-slate-900 break-words">
-                      {cat.title}
-                    </h3>
-                    <p className="text-[13px] leading-relaxed text-slate-600 break-words">
-                      {cat.subtitle}
-                    </p>
+                    <h3 className="break-words text-base font-semibold leading-snug text-slate-900">{cat.title}</h3>
+                    <p className="break-words text-[13px] leading-relaxed text-slate-600">{cat.subtitle}</p>
                   </div>
                 </div>
                 <div className="flex flex-col items-end gap-1">
@@ -482,9 +362,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <p className="mt-3 text-sm leading-relaxed text-slate-700 break-words">
-                {cat.description}
-              </p>
+              <p className="mt-3 break-words text-sm leading-relaxed text-slate-700">{cat.description}</p>
 
               <div className="mt-3 space-y-2">
                 {cat.items.map((item) => (
@@ -493,7 +371,7 @@ export default function HomePage() {
                     className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2.5"
                   >
                     <div className="flex items-start justify-between gap-2">
-                      <span className="flex-1 min-w-0 text-sm font-semibold leading-snug text-slate-900 break-words">
+                      <span className="flex-1 min-w-0 break-words text-sm font-semibold leading-snug text-slate-900">
                         {item.name}
                       </span>
                       {item.isPremium && (
@@ -502,7 +380,7 @@ export default function HomePage() {
                         </span>
                       )}
                     </div>
-                    <p className="mt-1 text-[12px] leading-relaxed text-slate-600 break-words">
+                    <p className="mt-1 break-words text-[12px] leading-relaxed text-slate-600">
                       {item.description}
                     </p>
                   </div>
@@ -514,12 +392,15 @@ export default function HomePage() {
       </section>
 
       {/* PRICING / PREMIUM */}
-        <section id="pricing" className="grid gap-6 lg:grid-cols-1 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:items-start">
+      <section
+        id="pricing"
+        className="grid gap-6 md:items-start lg:grid-cols-1 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]"
+      >
         <div className="space-y-3">
           <h2 className="text-base font-semibold text-slate-900">Ücretsiz başla, hazır olunca yükselt</h2>
           <p className="text-sm text-slate-600">
-            AIEngineersLab, önce ücretsiz araçlarla seni tanıştırır. Premium paketle, proje ve kalite
-            tarafındaki tüm şablon ve hesaplayıcılara erişirsin.
+            AIEngineersLab, önce ücretsiz araçlarla seni tanıştırır. Premium ile tüm şablon ve hesaplayıcılara
+            erişirsin.
           </p>
 
           <div className="grid gap-3 text-sm text-slate-700 md:grid-cols-2">
@@ -529,7 +410,7 @@ export default function HomePage() {
                 <span className="font-semibold">Ücretsiz paket</span>
               </div>
               <ul className="mt-2 space-y-1.5 text-[13px] text-slate-600">
-                <li>- Cıvata & diş temel rehberler</li>
+                <li>- Civata & dişli temel rehberler</li>
                 <li>- Bazı mekanik hesaplayıcılar</li>
                 <li>- Kariyer merkezi temel içerikleri</li>
               </ul>
@@ -537,7 +418,7 @@ export default function HomePage() {
             <div className="rounded-2xl border border-amber-200 bg-amber-50 p-3 shadow-sm">
               <div className="flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-amber-600" />
-                <span className="font-semibold text-amber-900">Premium paket</span>
+                <span className="font-semibold text-amber-900">Premium</span>
               </div>
               <ul className="mt-2 space-y-1.5 text-[13px] text-amber-900/80">
                 <li>- Tüm hesaplayıcı ve şablonlara tam erişim</li>
@@ -561,25 +442,24 @@ export default function HomePage() {
             </span>
           </div>
           <p className="mt-3 text-sm text-slate-600">
-            Şu an odak, içerik ve araç kütüphanesini olgunlaştırmak. Fiyat ve paket yapısı netleştiğinde,
-            mevcut kullanıcılara erken erişim ve indirim tanımlanacak.
+            Şu an odak, içerik ve araç kütüphanesini olgunlaştırmak. Fiyat ve paket yapısı netleştiğinde, mevcut
+            kullanıcılara erken erişim ve indirim tanımlanacak.
           </p>
         </div>
       </section>
 
       {/* HAKKINDA / FOOTER */}
-        <section id="about" className="space-y-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="grid gap-6 lg:grid-cols-1 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+      <section id="about" className="space-y-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="grid gap-6 lg:grid-cols-1 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
           <div>
             <h2 className="text-base font-semibold text-slate-900">Bu platform kimin için?</h2>
             <p className="mt-2 text-sm text-slate-700">
               AIEngineersLab;{" "}
               <span className="font-semibold">
-                mühendislik öğrencileri, yeni mezunlar ve sahada çalışan proje / kalite / tasarım
-                mühendisleri
+                mühendislik öğrencileri, yeni mezunlar ve sahada çalışan proje / kalite / tasarım mühendisleri
               </span>{" "}
-              için hazırlandı. Teorik bilgiyi; otomotiv, ağır vasıta ve kompresör dünyasından gerçek
-              örneklerle birleştirir.
+              için hazırlandı. Teorik bilgiyi; otomotiv, ağır vasıta ve kompresör dünyasından gerçek örneklerle
+              birleştirir.
             </p>
           </div>
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700">
@@ -588,8 +468,7 @@ export default function HomePage() {
               <span className="font-semibold text-slate-900">
                 gerçek projelerde kullanılabilir, güvenilir ve sindirilmiş içerikler
               </span>{" "}
-              sunmaktır. Zamanla hesaplayıcılar, PDF rehberler, MSA/SPC şablonları ve daha fazlası
-              eklenecek.
+              sunmaktır. Zamanla hesaplayıcılar, PDF rehberler, MSA/SPC şablonları ve daha fazlası eklenecek.
             </p>
           </div>
         </div>
