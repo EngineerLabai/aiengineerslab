@@ -1,4 +1,3 @@
-// app/page.tsx
 import { ReactNode } from "react";
 
 type IconProps = React.SVGProps<SVGSVGElement>;
@@ -40,13 +39,6 @@ const CheckCircle2 = (props: IconProps) => (
   </svg>
 );
 
-const Gauge = (props: IconProps) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M12 15 15 9" />
-    <path d="M12 21a9 9 0 1 1 9-9h-3" />
-  </svg>
-);
-
 const Layers = (props: IconProps) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" {...props}>
     <path d="m12 3 9 5-9 5-9-5Z" />
@@ -66,12 +58,6 @@ const Target = (props: IconProps) => (
     <circle cx="12" cy="12" r="8" />
     <circle cx="12" cy="12" r="4" />
     <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
-  </svg>
-);
-
-const Wrench = (props: IconProps) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M15 6a4 4 0 0 0-5.2 5.8l-4.5 4.5a2 2 0 1 0 2.8 2.8l4.5-4.5A4 4 0 0 0 18 9.5l2-2-3-3Z" />
   </svg>
 );
 
@@ -96,7 +82,7 @@ const categories: Category[] = [
     title: "Hesaplayıcılar",
     subtitle: "Mühendislik hızlı hesaplar",
     description:
-      "Dişli, tork, kuvvet, ısı, akış ve boyutlandırma hesaplarını saniyeler içinde çözüme ulaştır.",
+      "Dişli, tork, kuvvet, ısı, akış ve boyutlandırma hesaplarını saniyeler içinde sonuca ulaştır.",
     level: "intermediate",
     badge: "Güncel",
     icon: <Calculator className="h-6 w-6 text-sky-600" />,
@@ -132,7 +118,7 @@ const categories: Category[] = [
     items: [
       { name: "Soru-cevap", description: "Uygulama sorunlarını veya hesap sorularını tartış." },
       { name: "İpucu arşivi", description: "Sahadan gelen pratik çözümler ve hızlandırıcılar." },
-      { name: "Kullanıcı galerisi", description: "Kendi çözüm ve şablonlarını paylaş." },
+      { name: "Kullanıcı galerisi", description: "Kendi çözümlerini ve şablonlarını paylaş." },
     ],
   },
   {
@@ -189,7 +175,7 @@ const popularTools = [
   {
     name: "APQP Yol Haritası Aracı",
     category: "Mühendise Sor",
-    type: "Pro Aracı",
+    type: "Pro Araç",
     isPremium: true,
   },
 ];
@@ -208,71 +194,70 @@ function levelLabel(level: Category["level"]) {
 export default function HomePage() {
   return (
     <div className="space-y-12">
-      {/* HERO */}
-      <section className="grid gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
-        <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(56,189,248,0.08),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(59,130,246,0.08),transparent_24%)]" />
-          <div className="relative">
-            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-sky-100 bg-sky-50 px-3 py-1 text-[11px] text-sky-700 md:text-xs">
+      <section className="grid gap-6 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.95fr)]">
+        <div className="relative overflow-hidden rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 px-6 py-8 shadow-sm">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(56,189,248,0.15),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(59,130,246,0.12),transparent_24%)]" />
+          <div className="relative space-y-4">
+            <div className="inline-flex items-center gap-2 rounded-full border border-sky-500/40 bg-sky-500/10 px-3 py-1 text-[11px] text-sky-100 md:text-xs">
               <Sparkles className="h-3.5 w-3.5" />
-              <span>Otomotiv ve ağır vasıta odaklı mühendislik platformu</span>
+              <span>Üretim ve kalite odaklı hızlı hesaplayıcılar</span>
             </div>
 
-            <h1 className="text-balance text-3xl font-semibold leading-tight tracking-tight text-slate-900 md:text-4xl lg:text-[44px]">
-              Hesaplayıcılar, şablonlar ve rehberlerle
-              <span className="block bg-gradient-to-r from-sky-600 via-sky-500 to-blue-500 bg-clip-text text-transparent">
-                mühendislik işini hızlandır.
-              </span>
+            <h1 className="text-3xl font-semibold leading-tight tracking-tight text-white md:text-4xl">
+              Üretim, kalite ve tasarım için hızlı hesaplama araçları
             </h1>
-
-            <p className="mt-4 max-w-2xl text-sm text-slate-600 md:text-base">
-              AIEngineersLab, mühendislik öğrencileri ve sahada çalışan mühendisler için tasarlandı; civata & dişli
-              çözümlerinden proje yönetimi ve kalite araçlarına kadar uzanan bir bilgi ve araç kütüphanesi.
+            <p className="max-w-2xl text-sm text-slate-200 md:text-base">
+              Çekme gerilmesi, civata boyut ve tork, malzeme kartları ve daha fazlasını ücretsiz dene; yeni
+              modüller kademeli olarak ekleniyor.
             </p>
 
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <button className="inline-flex items-center gap-2 rounded-full bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500">
-                Ücretsiz araçları keşfet
-                <ArrowUpRight className="h-4 w-4" />
-              </button>
-              <button className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 transition hover:border-slate-400 hover:bg-slate-100">
-                Premium'a göz at
-              </button>
+            <div className="flex flex-wrap gap-3 text-xs md:text-sm">
+              <span className="inline-flex items-center rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1 text-emerald-200">
+                13+ aktif hesaplayıcı
+              </span>
+              <span className="inline-flex items-center rounded-full border border-sky-500/40 bg-sky-500/10 px-3 py-1 text-sky-200">
+                Tamamen ücretsiz (şimdilik)
+              </span>
+              <span className="inline-flex items-center rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1 text-amber-200">
+                Üretim & kalite odaklı
+              </span>
             </div>
 
-            <div className="mt-6 grid gap-3 text-xs text-slate-600 md:grid-cols-2 md:text-[13px]">
-              <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/70 px-3 py-2 shadow-sm">
-                <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+            <div className="grid gap-3 text-xs text-slate-200 md:grid-cols-2 md:text-[13px]">
+              <div className="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
+                <CheckCircle2 className="h-4 w-4 text-emerald-300" />
                 <span>Gerçek otomotiv & ağır vasıta projelerinden beslenen içerikler</span>
               </div>
-              <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/70 px-3 py-2 shadow-sm">
-                <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+              <div className="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
+                <CheckCircle2 className="h-4 w-4 text-emerald-300" />
                 <span>Öğrenciler için anlaşılır, profesyoneller için yeterince derin</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <div className="flex items-center justify-between gap-2">
             <div className="flex min-w-0 items-center gap-2 text-slate-800">
               <BarChart3 className="h-4 w-4 text-sky-600" />
               <span className="break-words text-sm font-semibold leading-snug">Hızlı Bakış Paneli</span>
             </div>
-            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600">Beta</span>
+            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600">
+              Beta
+            </span>
           </div>
 
           <div className="mt-4 space-y-3 text-sm text-slate-700">
             <div className="flex items-center justify-between gap-2">
-              <span className="min-w-0 break-words">Civata & Dişli Araçları</span>
+              <span className="min-w-0 break-words">Civata & dişli araçları</span>
               <span className="shrink-0 font-semibold text-sky-700">7+ araç</span>
             </div>
             <div className="flex items-center justify-between gap-2">
-              <span className="min-w-0 break-words">Mekanik Hesaplayıcılar</span>
+              <span className="min-w-0 break-words">Mekanik hesaplayıcılar</span>
               <span className="shrink-0 font-semibold text-sky-700">5+ araç</span>
             </div>
             <div className="flex items-center justify-between gap-2">
-              <span className="min-w-0 break-words">Proje & Kalite şablonları</span>
+              <span className="min-w-0 break-words">Proje & kalite şablonları</span>
               <span className="shrink-0 font-semibold text-sky-700">10+ şablon</span>
             </div>
           </div>
@@ -291,7 +276,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* POPÜLER ARAÇLAR */}
       <section id="popular" className="space-y-4">
         <div className="flex items-center justify-between gap-2">
           <h2 className="text-base font-semibold text-slate-900">Popüler araçlar</h2>
@@ -327,7 +311,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* KATEGORİLER */}
       <section id="categories" className="space-y-3">
         <h2 className="text-base font-semibold text-slate-900">Tüm kategoriler</h2>
         <p className="text-sm text-slate-600">
@@ -336,10 +319,7 @@ export default function HomePage() {
 
         <div className="mt-4 grid gap-5 lg:grid-cols-1 xl:grid-cols-2">
           {categories.map((cat) => (
-            <div
-              key={cat.id}
-              className="flex flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"
-            >
+            <div key={cat.id} className="flex flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex items-start justify-between gap-3">
                 <div className="flex min-w-0 items-center gap-3">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-50">
@@ -366,12 +346,9 @@ export default function HomePage() {
 
               <div className="mt-3 space-y-2">
                 {cat.items.map((item) => (
-                  <div
-                    key={item.name}
-                    className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2.5"
-                  >
+                  <div key={item.name} className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2.5">
                     <div className="flex items-start justify-between gap-2">
-                      <span className="flex-1 min-w-0 break-words text-sm font-semibold leading-snug text-slate-900">
+                      <span className="min-w-0 flex-1 break-words text-sm font-semibold leading-snug text-slate-900">
                         {item.name}
                       </span>
                       {item.isPremium && (
@@ -380,9 +357,7 @@ export default function HomePage() {
                         </span>
                       )}
                     </div>
-                    <p className="mt-1 break-words text-[12px] leading-relaxed text-slate-600">
-                      {item.description}
-                    </p>
+                    <p className="mt-1 break-words text-[12px] leading-relaxed text-slate-600">{item.description}</p>
                   </div>
                 ))}
               </div>
@@ -391,7 +366,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* PRICING / PREMIUM */}
       <section
         id="pricing"
         className="grid gap-6 md:items-start lg:grid-cols-1 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]"
@@ -399,8 +373,7 @@ export default function HomePage() {
         <div className="space-y-3">
           <h2 className="text-base font-semibold text-slate-900">Ücretsiz başla, hazır olunca yükselt</h2>
           <p className="text-sm text-slate-600">
-            AIEngineersLab, önce ücretsiz araçlarla seni tanıştırır. Premium ile tüm şablon ve hesaplayıcılara
-            erişirsin.
+            AIEngineersLab, önce ücretsiz araçlarla seni tanıştırır. Premium ile tüm şablon ve hesaplayıcılara erişirsin.
           </p>
 
           <div className="grid gap-3 text-sm text-slate-700 md:grid-cols-2">
@@ -448,7 +421,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* HAKKINDA / FOOTER */}
       <section id="about" className="space-y-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
         <div className="grid gap-6 lg:grid-cols-1 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
           <div>

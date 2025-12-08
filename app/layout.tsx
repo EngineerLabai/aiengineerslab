@@ -126,7 +126,7 @@ export default function RootLayout({
     <html lang="tr">
       <body className={`${raleway.variable} ${jetBrainsMono.variable} antialiased bg-slate-50 text-slate-900`}>
         <div className="flex min-h-screen flex-col bg-[radial-gradient(circle_at_20%_20%,rgba(100,116,139,0.05),transparent_30%),radial-gradient(circle_at_80%_0%,rgba(16,185,129,0.05),transparent_25%)]">
-          <header className="border-b border-slate-200 bg-white/80 backdrop-blur">
+          <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/80 backdrop-blur">
             <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
               <Link href="/" className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-800 text-sm font-black text-white shadow-sm">
@@ -220,11 +220,15 @@ export default function RootLayout({
 function MegaMenuItem({ section }: { section: NavSection }) {
   return (
     <div className="group relative">
-      <button className="flex items-center gap-2 rounded-full px-3 py-2 text-sm font-semibold text-slate-800 transition hover:bg-white/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300">
+      <button
+        type="button"
+        className="flex items-center gap-2 rounded-full px-3 py-2 text-sm font-semibold text-slate-800 transition hover:bg-white/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+        aria-expanded="false"
+      >
         {section.label}
         <span className="text-[10px] text-slate-500">v</span>
       </button>
-      <div className="pointer-events-none absolute left-0 top-full z-30 w-[360px] translate-y-2 opacity-0 transition duration-200 group-hover:pointer-events-auto group-hover:translate-y-3 group-hover:opacity-100">
+      <div className="pointer-events-none absolute left-0 top-full z-30 w-[360px] translate-y-2 opacity-0 transition duration-200 group-hover:pointer-events-auto group-hover:translate-y-3 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:translate-y-3 group-focus-within:opacity-100">
         <div className="rounded-2xl border border-slate-200 bg-white/95 p-4 shadow-2xl ring-1 ring-black/5 backdrop-blur">
           <p className="mb-3 text-[11px] leading-relaxed text-slate-600">{section.description}</p>
           <div className="grid gap-1">
