@@ -1,3 +1,4 @@
+// app/page.tsx
 import { ReactNode } from "react";
 
 type IconProps = React.SVGProps<SVGSVGElement>;
@@ -80,16 +81,15 @@ const categories: Category[] = [
   {
     id: "calculators",
     title: "Hesaplayıcılar",
-    subtitle: "Mühendislik hızlı hesaplar",
-    description:
-      "Dişli, tork, kuvvet, ısı, akış ve boyutlandırma hesaplarını saniyeler içinde sonuca ulaştır.",
+    subtitle: "Mühendislik hesapları",
+    description: "Dişli, tork, kuvvet, ısı, akış ve boyutlandırma hesaplarını saniyeler içinde tamamla.",
     level: "intermediate",
     badge: "Güncel",
     icon: <Calculator className="h-6 w-6 text-sky-600" />,
     items: [
       { name: "Dişli ve tahrik", description: "Modül, oran, Ft/Fr/Fa, helis ve backlash hesapları." },
       { name: "Tork ve kuvvet", description: "Motor gücü, tork, eksenel/radyal yük tahminleri." },
-      { name: "Isı / akış", description: "Temel ısı, enerji veya akış hesapları için kısayollar." },
+      { name: "Isı / akış", description: "Temel ısıl, enerji veya akış hesapları için kısayollar." },
     ],
   },
   {
@@ -110,8 +110,7 @@ const categories: Category[] = [
     id: "forum",
     title: "Forum",
     subtitle: "Topluluk ve deneyim paylaşımı",
-    description:
-      "Diğer mühendislerle soru-cevap, ipuçları ve alan tecrübelerini paylaşmak için topluluk alanı.",
+    description: "Soru-cevap, ipuçları ve saha tecrübelerini paylaşmak için topluluk alanı.",
     level: "beginner",
     badge: "Yakında",
     icon: <Layers className="h-6 w-6 text-purple-600" />,
@@ -125,8 +124,7 @@ const categories: Category[] = [
     id: "ask-engineer",
     title: "Mühendise Sor",
     subtitle: "Uzmandan hızlı yanıt",
-    description:
-      "Kritik tasarım, malzeme veya proses sorularında uzman desteği al; mini danışmanlık ve revizyon önerileri.",
+    description: "Kritik tasarım, malzeme veya proses sorularında uzman desteği al; mini danışmanlık ve revizyon önerileri.",
     level: "advanced",
     badge: "1-1 destek",
     icon: <Target className="h-6 w-6 text-emerald-600" />,
@@ -140,8 +138,7 @@ const categories: Category[] = [
     id: "contact",
     title: "İletişim",
     subtitle: "Geri bildirim ve destek",
-    description:
-      "Öneri, hata bildirimi veya iş birliği için doğrudan ulaş. İletişim kanallarını hızlıca seç.",
+    description: "Öneri, hata bildirimi veya iş birliği için doğrudan ulaş. İletişim kanallarını hızlıca seç.",
     level: "beginner",
     badge: "Açık",
     icon: <Sparkles className="h-6 w-6 text-sky-600" />,
@@ -154,30 +151,10 @@ const categories: Category[] = [
 ];
 
 const popularTools = [
-  {
-    name: "Sıkma Torku Hesaplayıcı",
-    category: "Hesaplayıcılar",
-    type: "Hesaplayıcı",
-    isPremium: true,
-  },
-  {
-    name: "Malzeme Karşılaştırma Aracı",
-    category: "Araçlar",
-    type: "Rehber",
-    isPremium: false,
-  },
-  {
-    name: "Eğilme Gerilmesi Hesaplayıcı",
-    category: "Hesaplayıcılar",
-    type: "Hesaplayıcı",
-    isPremium: false,
-  },
-  {
-    name: "APQP Yol Haritası Aracı",
-    category: "Mühendise Sor",
-    type: "Pro Araç",
-    isPremium: true,
-  },
+  { name: "Sıkma Torku Hesaplayıcı", category: "Hesaplayıcılar", type: "Hesap", isPremium: true },
+  { name: "Malzeme Karşılaştırma", category: "Araçlar", type: "Rehber", isPremium: false },
+  { name: "Eğilme Gerilmesi", category: "Hesaplayıcılar", type: "Hesap", isPremium: false },
+  { name: "APQP Yol Haritası", category: "Mühendise Sor", type: "Pro Araç", isPremium: true },
 ];
 
 function levelLabel(level: Category["level"]) {
@@ -207,8 +184,7 @@ export default function HomePage() {
               Üretim, kalite ve tasarım için hızlı hesaplama araçları
             </h1>
             <p className="max-w-2xl text-sm text-slate-200 md:text-base">
-              Çekme gerilmesi, civata boyut ve tork, malzeme kartları ve daha fazlasını ücretsiz dene; yeni
-              modüller kademeli olarak ekleniyor.
+              Çekme gerilmesi, civata boyut ve tork, malzeme kartları ve daha fazlasını ücretsiz dene; yeni modüller kademeli olarak ekleniyor.
             </p>
 
             <div className="flex flex-wrap gap-3 text-xs md:text-sm">
@@ -226,11 +202,11 @@ export default function HomePage() {
             <div className="grid gap-3 text-xs text-slate-200 md:grid-cols-2 md:text-[13px]">
               <div className="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
                 <CheckCircle2 className="h-4 w-4 text-emerald-300" />
-                <span>Gerçek otomotiv & ağır vasıta projelerinden beslenen içerikler</span>
+                <span>Gerçek projelerden beslenen içerikler</span>
               </div>
               <div className="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
                 <CheckCircle2 className="h-4 w-4 text-emerald-300" />
-                <span>Öğrenciler için anlaşılır, profesyoneller için yeterince derin</span>
+                <span>Öğrenciler için anlaşılır, profesyoneller için derin</span>
               </div>
             </div>
           </div>
@@ -242,9 +218,7 @@ export default function HomePage() {
               <BarChart3 className="h-4 w-4 text-sky-600" />
               <span className="break-words text-sm font-semibold leading-snug">Hızlı Bakış Paneli</span>
             </div>
-            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600">
-              Beta
-            </span>
+            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600">Beta</span>
           </div>
 
           <div className="mt-4 space-y-3 text-sm text-slate-700">
@@ -265,9 +239,7 @@ export default function HomePage() {
           <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-3">
             <div className="flex items-center justify-between gap-2 text-[12px] text-slate-800">
               <span>AI asistan desteği</span>
-              <span className="shrink-0 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">
-                Yakında
-              </span>
+              <span className="shrink-0 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">Yakında</span>
             </div>
             <p className="mt-2 text-[12px] text-slate-600">
               Hesap sonuçlarını yorumlayan ve projene göre öneri veren yapay zeka asistanının entegrasyonu planlanıyor.
@@ -294,9 +266,7 @@ export default function HomePage() {
                 <div className="flex items-center gap-2">
                   <span className="break-words font-semibold text-slate-900">{tool.name}</span>
                   {tool.isPremium && (
-                    <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-700">
-                      Premium
-                    </span>
+                    <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-700">Premium</span>
                   )}
                 </div>
                 <div className="mt-1 flex flex-wrap items-center gap-2 text-[12px] text-slate-600">
@@ -314,7 +284,7 @@ export default function HomePage() {
       <section id="categories" className="space-y-3">
         <h2 className="text-base font-semibold text-slate-900">Tüm kategoriler</h2>
         <p className="text-sm text-slate-600">
-          Ücretsiz olarak göz atabilir, detaylı hesaplayıcılar ve şablonlar için Premium'a göz at yapabilirsin.
+          Ücretsiz olarak göz atabilir, detaylı hesaplayıcılar ve şablonlar için Premium'a geçebilirsin.
         </p>
 
         <div className="mt-4 grid gap-5 lg:grid-cols-1 xl:grid-cols-2">
@@ -322,9 +292,7 @@ export default function HomePage() {
             <div key={cat.id} className="flex flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex items-start justify-between gap-3">
                 <div className="flex min-w-0 items-center gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-50">
-                    {cat.icon}
-                  </div>
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-50">{cat.icon}</div>
                   <div className="min-w-0">
                     <h3 className="break-words text-base font-semibold leading-snug text-slate-900">{cat.title}</h3>
                     <p className="break-words text-[13px] leading-relaxed text-slate-600">{cat.subtitle}</p>
@@ -335,9 +303,7 @@ export default function HomePage() {
                     {levelLabel(cat.level)}
                   </span>
                   {cat.badge && (
-                    <span className="rounded-full bg-sky-50 px-2 py-0.5 text-[11px] font-semibold text-sky-700">
-                      {cat.badge}
-                    </span>
+                    <span className="rounded-full bg-sky-50 px-2 py-0.5 text-[11px] font-semibold text-sky-700">{cat.badge}</span>
                   )}
                 </div>
               </div>
@@ -348,13 +314,9 @@ export default function HomePage() {
                 {cat.items.map((item) => (
                   <div key={item.name} className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2.5">
                     <div className="flex items-start justify-between gap-2">
-                      <span className="min-w-0 flex-1 break-words text-sm font-semibold leading-snug text-slate-900">
-                        {item.name}
-                      </span>
+                      <span className="min-w-0 flex-1 break-words text-sm font-semibold leading-snug text-slate-900">{item.name}</span>
                       {item.isPremium && (
-                        <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-700">
-                          Premium
-                        </span>
+                        <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-700">Premium</span>
                       )}
                     </div>
                     <p className="mt-1 break-words text-[12px] leading-relaxed text-slate-600">{item.description}</p>
@@ -364,103 +326,6 @@ export default function HomePage() {
             </div>
           ))}
         </div>
-      </section>
-
-      <section
-        id="pricing"
-        className="grid gap-6 md:items-start lg:grid-cols-1 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]"
-      >
-        <div className="space-y-3">
-          <h2 className="text-base font-semibold text-slate-900">Ücretsiz başla, hazır olunca yükselt</h2>
-          <p className="text-sm text-slate-600">
-            AIEngineersLab, önce ücretsiz araçlarla seni tanıştırır. Premium ile tüm şablon ve hesaplayıcılara erişirsin.
-          </p>
-
-          <div className="grid gap-3 text-sm text-slate-700 md:grid-cols-2">
-            <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                <span className="font-semibold">Ücretsiz paket</span>
-              </div>
-              <ul className="mt-2 space-y-1.5 text-[13px] text-slate-600">
-                <li>- Civata & dişli temel rehberler</li>
-                <li>- Bazı mekanik hesaplayıcılar</li>
-                <li>- Kariyer merkezi temel içerikleri</li>
-              </ul>
-            </div>
-            <div className="rounded-2xl border border-amber-200 bg-amber-50 p-3 shadow-sm">
-              <div className="flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-amber-600" />
-                <span className="font-semibold text-amber-900">Premium</span>
-              </div>
-              <ul className="mt-2 space-y-1.5 text-[13px] text-amber-900/80">
-                <li>- Tüm hesaplayıcı ve şablonlara tam erişim</li>
-                <li>- Proje & kalite alanında ek araçlar</li>
-                <li>- Yeni araçlara öncelikli erişim</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
-          <div className="flex items-baseline justify-between gap-2">
-            <div>
-              <span className="text-[12px] uppercase tracking-wide text-slate-500">Başlangıç fiyatı</span>
-              <div className="mt-1 flex items-end gap-1">
-                <span className="text-2xl font-semibold text-slate-900">Yakında</span>
-              </div>
-            </div>
-            <span className="rounded-full bg-slate-50 px-2 py-0.5 text-[11px] font-medium text-slate-600">
-              Henüz satışta değil
-            </span>
-          </div>
-          <p className="mt-3 text-sm text-slate-600">
-            Şu an odak, içerik ve araç kütüphanesini olgunlaştırmak. Fiyat ve paket yapısı netleştiğinde, mevcut
-            kullanıcılara erken erişim ve indirim tanımlanacak.
-          </p>
-        </div>
-      </section>
-
-      <section id="about" className="space-y-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-        <div className="grid gap-6 lg:grid-cols-1 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-          <div>
-            <h2 className="text-base font-semibold text-slate-900">Bu platform kimin için?</h2>
-            <p className="mt-2 text-sm text-slate-700">
-              AIEngineersLab;{" "}
-              <span className="font-semibold">
-                mühendislik öğrencileri, yeni mezunlar ve sahada çalışan proje / kalite / tasarım mühendisleri
-              </span>{" "}
-              için hazırlandı. Teorik bilgiyi; otomotiv, ağır vasıta ve kompresör dünyasından gerçek örneklerle
-              birleştirir.
-            </p>
-          </div>
-          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700">
-            <p>
-              Hedef; internette dağınık halde bulunan bilgileri tek yerde toplamak değil,{" "}
-              <span className="font-semibold text-slate-900">
-                gerçek projelerde kullanılabilir, güvenilir ve sindirilmiş içerikler
-              </span>{" "}
-              sunmaktır. Zamanla hesaplayıcılar, PDF rehberler, MSA/SPC şablonları ve daha fazlası eklenecek.
-            </p>
-          </div>
-        </div>
-
-        <footer className="flex flex-col items-start justify-between gap-3 border-t border-slate-200 pt-4 text-sm text-slate-600 md:flex-row md:items-center">
-          <div>© {new Date().getFullYear()} AIEngineersLab. Tüm hakları saklıdır.</div>
-          <div className="flex flex-wrap items-center gap-3">
-            <a href="#" className="hover:text-slate-900">
-              İletişim
-            </a>
-            <span className="h-1 w-1 rounded-full bg-slate-400" />
-            <a href="#" className="hover:text-slate-900">
-              Gizlilik
-            </a>
-            <span className="h-1 w-1 rounded-full bg-slate-400" />
-            <a href="#" className="hover:text-slate-900">
-              Kullanım Koşulları
-            </a>
-          </div>
-        </footer>
       </section>
     </div>
   );

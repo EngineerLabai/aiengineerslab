@@ -1,5 +1,6 @@
-// app/layout.tsx
+﻿// app/layout.tsx
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { JetBrains_Mono, Raleway } from "next/font/google";
 import "./globals.css";
@@ -30,6 +31,11 @@ type NavSection = {
   links: { label: string; href: string; badge?: string }[];
 };
 
+type SidebarSection = {
+  label: string;
+  links: { label: string; href: string }[];
+};
+
 const navSections: NavSection[] = [
   {
     label: "Hesaplayıcılar",
@@ -53,46 +59,23 @@ const navSections: NavSection[] = [
     label: "Forum",
     description: "Topluluk tartışmaları ve paylaşımlar.",
     links: [
-      { label: "Topluluk", href: "#" },
-      { label: "Soru-cevap", href: "#" },
-    ],
-  },
-  {
-    label: "Mühendise Sor",
-    description: "Hızlı teknik destek ve mini danışmanlık.",
-    links: [
-      { label: "Hızlı inceleme", href: "#" },
-      { label: "Toplantı planla", href: "#" },
+      { label: "Topluluk", href: "/community" },
+      { label: "Soru-cevap", href: "/forum" },
     ],
   },
   {
     label: "İletişim",
     description: "Geri bildirim ve destek kanalları.",
-    links: [
-      { label: "İletişim formu", href: "#" },
-      { label: "Geri bildirim", href: "#" },
-    ],
+    links: [{ label: "Bize ulaşın", href: "/support" }],
   },
 ];
-
-type SidebarSection = {
-  label: string;
-  links: { label: string; href: string }[];
-};
 
 const sidebarSections: SidebarSection[] = [
   {
     label: "Genel",
     links: [
       { label: "Ana Sayfa", href: "/" },
-      { label: "Hesaplayıcılar", href: "/tools/gear-design/calculators" },
-    ],
-  },
-  {
-    label: "Hesaplayıcılar",
-    links: [
-      { label: "Dişli hesaplamaları", href: "/tools/gear-design/calculators" },
-      { label: "Mekanik Hesaplamalar", href: "/tools" },
+      { label: "Hesaplayıcılar", href: "/tools" },
     ],
   },
   {
@@ -105,22 +88,21 @@ const sidebarSections: SidebarSection[] = [
   },
   {
     label: "Forum",
-    links: [{ label: "Topluluk", href: "#" }],
-  },
-  {
-    label: "Mühendise Sor",
-    links: [{ label: "Teknik destek", href: "#" }],
+    links: [
+      { label: "Topluluk", href: "/community" },
+      { label: "Soru-cevap", href: "/forum" },
+    ],
   },
   {
     label: "İletişim",
-    links: [{ label: "Bize ulaşın", href: "#" }],
+    links: [{ label: "Bize ulaşın", href: "/support" }],
   },
 ];
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="tr">
@@ -129,9 +111,7 @@ export default function RootLayout({
           <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/80 backdrop-blur">
             <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
               <Link href="/" className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-800 text-sm font-black text-white shadow-sm">
-                  AI
-                </div>
+                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-800 text-sm font-black text-white shadow-sm">AI</div>
                 <div className="flex flex-col">
                   <span className="text-xs font-semibold uppercase tracking-[0.08em] text-slate-500">AI Engineers Lab</span>
                   <span className="text-sm font-semibold text-slate-900">Açık ve minimal mühendislik platformu</span>
@@ -139,9 +119,33 @@ export default function RootLayout({
               </Link>
 
               <nav className="hidden items-center gap-1 lg:flex">
-                {navSections.map((section) => (
-                  <MegaMenuItem key={section.label} section={section} />
-                ))}
+                {navSections.map((section) => {
+                  if (section.label === "Hesaplayıcılar") {
+                    return (
+                      <Link
+                        key={section.label}
+                        href="/tools"
+                        className="flex items-center gap-2 rounded-full px-3 py-2 text-sm font-semibold text-slate-800 transition hover:bg-white/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+                      >
+                        {section.label}
+                      </Link>
+                    );
+                  }
+
+                  if (section.label === "İletişim") {
+                    return (
+                      <Link
+                        key={section.label}
+                        href="/support"
+                        className="flex items-center gap-2 rounded-full px-3 py-2 text-sm font-semibold text-slate-800 transition hover:bg-white/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+                      >
+                        {section.label}
+                      </Link>
+                    );
+                  }
+
+                  return <MegaMenuItem key={section.label} section={section} />;
+                })}
               </nav>
 
               <div className="flex items-center gap-2 text-xs">
@@ -162,10 +166,10 @@ export default function RootLayout({
 
             <div className="border-t border-slate-100 bg-white/80 px-4 py-2 lg:hidden">
               <div className="mx-auto flex max-w-7xl flex-wrap gap-2">
-                {navSections.slice(0, 3).map((section) => (
+                {navSections.slice(0, 3).map((section, index) => (
                   <Link
                     key={section.label}
-                    href={section.links[0]?.href ?? "#"}
+                    href={index === 0 ? "/tools" : section.links[0]?.href ?? "#"}
                     className="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700"
                   >
                     {section.label}
@@ -189,16 +193,6 @@ export default function RootLayout({
 
               <aside className="hidden w-72 shrink-0 xl:block">
                 <div className="sticky top-4 space-y-4 text-xs">
-                  <div className="rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm backdrop-blur">
-                    <h2 className="mb-1 text-sm font-semibold text-slate-900">Mühendise Sor</h2>
-                    <p className="mb-3 text-[11px] leading-relaxed text-slate-600">
-                      Cıvata, tork, malzeme veya fikstür tasarımında takıldığın noktalar için teknik destek iste.
-                    </p>
-                    <button className="w-full rounded-full bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-emerald-500">
-                      Teknik destek talebi oluştur
-                    </button>
-                  </div>
-
                   <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm backdrop-blur">
                     <h2 className="mb-1 text-sm font-semibold text-slate-900">Premium Üyelik</h2>
                     <ul className="list-disc space-y-1 pl-4 text-[11px] text-slate-600">
@@ -240,9 +234,7 @@ function MegaMenuItem({ section }: { section: NavSection }) {
               >
                 <span>{link.label}</span>
                 {link.badge ? (
-                  <span className="rounded-full bg-slate-900/5 px-2 py-0.5 text-[10px] font-semibold text-slate-600">
-                    {link.badge}
-                  </span>
+                  <span className="rounded-full bg-slate-900/5 px-2 py-0.5 text-[10px] font-semibold text-slate-600">{link.badge}</span>
                 ) : (
                   <span className="text-[10px] text-slate-400">&gt;</span>
                 )}
