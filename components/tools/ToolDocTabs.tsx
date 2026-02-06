@@ -4,25 +4,19 @@ import type { ReactNode } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import ActionCard from "@/components/ui/ActionCard";
+import ToolFavoriteButton from "@/components/tools/ToolFavoriteButton";
 import Callout from "@/components/mdx/Callout";
 import MDXClient from "@/components/mdx/MDXClient";
+import PremiumCTA from "@/components/premium/PremiumCTA";
 import { useLocale } from "@/components/i18n/LocaleProvider";
+import { getMessages } from "@/utils/messages";
 import { trackEvent } from "@/utils/analytics";
+import { addRecent } from "@/utils/tool-storage";
+import { getToolCopy, toolCatalog } from "@/tools/_shared/catalog";
 
-const TABS = {
-  tr: [
-    { id: "calculator", label: "Hesaplayici" },
-    { id: "explanation", label: "Aciklama" },
-    { id: "examples", label: "Ornekler" },
-  ],
-  en: [
-    { id: "calculator", label: "Calculator" },
-    { id: "explanation", label: "Explanation" },
-    { id: "examples", label: "Examples" },
-  ],
-} as const;
+const TAB_IDS = ["calculator", "explanation", "examples"] as const;
 
-type TabId = (typeof TABS)["tr"][number]["id"];
+type TabId = (typeof TAB_IDS)[number];
 
 type RelatedItem = {
   slug: string;
@@ -42,6 +36,7 @@ type ExampleItem = {
 
 type ToolDocsResponse = {
   tool: { id: string; title: string; tags: string[] } | null;
+  hasDocs: boolean;
   explanation: import("next-mdx-remote").MDXRemoteSerializeResult | null;
   examples:
     | { kind: "mdx"; source: import("next-mdx-remote").MDXRemoteSerializeResult }
@@ -53,79 +48,52 @@ type ToolDocsResponse = {
 type ToolDocTabsProps = {
   slug: string;
   children: ReactNode;
+  initialDocs?: ToolDocsResponse | null;
 };
 
-const isValidTab = (value: string | null, locale: "tr" | "en"): value is TabId =>
-  Boolean(value && TABS[locale].some((tab) => tab.id === value));
+const isValidTab = (value: string | null): value is TabId =>
+  Boolean(value && TAB_IDS.includes(value as TabId));
 
-export default function ToolDocTabs({ slug, children }: ToolDocTabsProps) {
+export default function ToolDocTabs({ slug, children, initialDocs = null }: ToolDocTabsProps) {
   const { locale } = useLocale();
+  const copy = getMessages(locale).components.toolDocTabs;
+  const allTabs = useMemo(() => TAB_IDS.map((id) => ({ id, label: copy.tabs[id] })), [copy]);
   const searchParams = useSearchParams();
   const tabParam = searchParams?.get("tab");
-  const initialTab = isValidTab(tabParam, locale) ? tabParam : "calculator";
+  const initialTab = isValidTab(tabParam) ? tabParam : "calculator";
   const [activeTab, setActiveTab] = useState<TabId>(initialTab);
-  const [docs, setDocs] = useState<ToolDocsResponse | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [docs, setDocs] = useState<ToolDocsResponse | null>(initialDocs);
+  const [loading, setLoading] = useState<boolean>(!initialDocs);
   const [error, setError] = useState<string>("");
   const didTrackOpen = useRef<string | null>(null);
-
-  const copy =
-    locale === "en"
-      ? {
-          tabsTitle: "Tool tabs",
-          explanationTitle: "Calculation explanation",
-          examplesTitle: "Examples",
-          loadingExamples: "Loading examples...",
-          loadingExplanation: "Loading explanation...",
-          docsFailed: "Documentation could not be loaded.",
-          examplesEmptyTitle: "Example",
-          examplesEmptyBody: "No example set yet for this tool.",
-          examplesEmptyHint: "Example set is empty. Update the JSON file to add samples.",
-          inputs: "Inputs",
-          outputs: "Outputs",
-          note: "Note",
-          guidesTitle: "Guides",
-          guidesHeading: "Related guides",
-          guidesDesc: "Browse guides with similar tags.",
-          glossaryTitle: "Glossary",
-          glossaryHeading: "Related terms",
-          glossaryDesc: "Terms that share the same concepts as this tool.",
-          read: "Read",
-        }
-      : {
-          tabsTitle: "Tool Sekmeleri",
-          explanationTitle: "Hesaplama Aciklamasi",
-          examplesTitle: "Ornekler",
-          loadingExamples: "Ornekler yukleniyor...",
-          loadingExplanation: "Aciklama yukleniyor...",
-          docsFailed: "Dokumantasyon yuklenemedi.",
-          examplesEmptyTitle: "Ornek",
-          examplesEmptyBody: "Bu arac icin ornek seti henuz eklenmedi.",
-          examplesEmptyHint: "Ornek seti bos. Yeni ornekler eklemek icin JSON dosyasini guncelle.",
-          inputs: "Girdiler",
-          outputs: "Ciktilar",
-          note: "Not",
-          guidesTitle: "Guides",
-          guidesHeading: "Ilgili rehberler",
-          guidesDesc: "Benzer etiketli rehberlere goz at.",
-          glossaryTitle: "Glossary",
-          glossaryHeading: "Ilgili terimler",
-          glossaryDesc: "Aracla ayni kavramlara bakan terimler.",
-          read: "Oku",
-        };
+  const didTrackRecent = useRef<string | null>(null);
 
   useEffect(() => {
-    if (isValidTab(tabParam, locale)) {
+    if (isValidTab(tabParam)) {
       Promise.resolve().then(() => setActiveTab(tabParam));
     }
-  }, [tabParam, locale]);
+  }, [tabParam]);
+
+  useEffect(() => {
+    if (!initialDocs) return;
+    setDocs(initialDocs);
+    setLoading(false);
+  }, [initialDocs]);
 
   useEffect(() => {
     let ignore = false;
     Promise.resolve().then(() => {
-      setLoading(true);
-      setError("");
+      if (!initialDocs) {
+        setLoading(true);
+        setError("");
+      }
     });
+
+    if (initialDocs) {
+      return () => {
+        ignore = true;
+      };
+    }
 
     fetch(`/api/tools/docs?slug=${encodeURIComponent(slug)}`)
       .then(async (res) => {
@@ -140,7 +108,7 @@ export default function ToolDocTabs({ slug, children }: ToolDocTabsProps) {
       })
       .catch(() => {
         if (!ignore) {
-          setError(copy.docsFailed);
+          setError(copy.docsFailedBody);
           setLoading(false);
         }
       });
@@ -148,7 +116,7 @@ export default function ToolDocTabs({ slug, children }: ToolDocTabsProps) {
     return () => {
       ignore = true;
     };
-  }, [slug, copy.docsFailed]);
+  }, [slug, copy.docsFailedBody, initialDocs]);
 
   useEffect(() => {
     if (!slug) return;
@@ -156,6 +124,22 @@ export default function ToolDocTabs({ slug, children }: ToolDocTabsProps) {
     didTrackOpen.current = slug;
     trackEvent("tool_open", { tool_id: slug });
   }, [slug]);
+
+  const resolvedTool = useMemo(() => {
+    if (docs?.tool) return docs.tool;
+    const normalized = slug.replace(/^\/+|\/+$/g, "");
+    const match = toolCatalog.find((tool) => tool.href.replace(/^\/tools\//, "") === normalized);
+    if (!match) return null;
+    const copy = getToolCopy(match, locale);
+    return { id: match.id, title: copy.title, tags: match.tags ?? [] };
+  }, [docs?.tool, slug, locale]);
+
+  useEffect(() => {
+    if (!resolvedTool?.id) return;
+    if (didTrackRecent.current === resolvedTool.id) return;
+    didTrackRecent.current = resolvedTool.id;
+    addRecent(resolvedTool.id);
+  }, [resolvedTool?.id]);
 
   const { relatedGuides, relatedGlossary, hasRelated } = useMemo(() => {
     const guides = docs?.related.guides ?? [];
@@ -167,20 +151,104 @@ export default function ToolDocTabs({ slug, children }: ToolDocTabsProps) {
     };
   }, [docs]);
 
-  const renderExamples = () => {
+  const hasExplanation = Boolean(docs?.explanation);
+  const hasExamples = Boolean(
+    docs?.examples && (docs.examples.kind !== "json" || docs.examples.items.length > 0),
+  );
+  const shouldShowMissingNote = !loading && !error && docs && !docs.hasDocs;
+
+  const availableTabs = useMemo(() => {
+    if (loading || error) return allTabs;
+
+    const calculatorTab = allTabs.find((tab) => tab.id === "calculator");
+    const explanationTab = allTabs.find((tab) => tab.id === "explanation");
+    const examplesTab = allTabs.find((tab) => tab.id === "examples");
+
+    const next = calculatorTab ? [calculatorTab] : [];
+
+    if (!docs || !docs.hasDocs) {
+      return next;
+    }
+
+    if (hasExplanation && explanationTab) {
+      next.push(explanationTab);
+    }
+
+    if (hasExamples && examplesTab) {
+      next.push(examplesTab);
+    }
+
+    return next;
+  }, [docs, hasExplanation, hasExamples, loading, error, allTabs]);
+
+  useEffect(() => {
+    if (!availableTabs.some((tab) => tab.id === activeTab)) {
+      setActiveTab("calculator");
+    }
+  }, [availableTabs, activeTab]);
+
+  const loadingCallout = (
+    <Callout type="info" title={copy.loadingTitle}>
+      {copy.loadingBody}
+    </Callout>
+  );
+
+  const errorCallout = (
+    <Callout type="warning" title={copy.docsFailedTitle}>
+      {error || copy.docsFailedBody}
+    </Callout>
+  );
+
+  const missingDocsCallout = (
+    <Callout type="info" title={copy.docsMissingTitle}>
+      {copy.docsMissingBody}
+    </Callout>
+  );
+
+  const renderExplanation = () => {
     if (loading) {
-      return <p className="text-sm text-slate-500">{copy.loadingExamples}</p>;
+      return loadingCallout;
     }
 
     if (error) {
-      return <p className="text-sm text-rose-600">{error}</p>;
+      return errorCallout;
+    }
+
+    if (shouldShowMissingNote) {
+      return missingDocsCallout;
+    }
+
+    if (docs?.explanation) {
+      return (
+        <div className="mdx-content space-y-6">
+          <MDXClient source={docs.explanation} />
+        </div>
+      );
+    }
+
+    return (
+      <Callout type="info" title={copy.explanationEmptyTitle}>
+        {copy.explanationEmptyBody}
+      </Callout>
+    );
+  };
+
+  const renderExamples = () => {
+    if (loading) {
+      return loadingCallout;
+    }
+
+    if (error) {
+      return errorCallout;
+    }
+
+    if (shouldShowMissingNote) {
+      return missingDocsCallout;
     }
 
     if (!docs?.examples) {
       return (
-        <Callout type="info" title={copy.examplesEmptyTitle}>
-          {copy.examplesEmptyBody}
-        </Callout>
+        <Callout type="info" title={copy.examplesEmptyTitle}>{copy.examplesEmptyBody}</Callout>
       );
     }
 
@@ -231,43 +299,42 @@ export default function ToolDocTabs({ slug, children }: ToolDocTabsProps) {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
-        <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">{copy.tabsTitle}</div>
-        <div className="flex flex-wrap gap-2">
-          {TABS[locale].map((tab) => (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => setActiveTab(tab.id)}
-              className={`rounded-full border px-4 py-2 text-[11px] font-semibold transition ${
-                activeTab === tab.id
-                  ? "border-emerald-300 bg-emerald-50 text-emerald-700"
-                  : "border-slate-200 bg-white text-slate-600 hover:border-slate-300"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+      <div className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">{copy.tabsTitle}</div>
+          <div className="flex flex-wrap gap-2">
+            {availableTabs.map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setActiveTab(tab.id)}
+                className={`rounded-full border px-4 py-2 text-[11px] font-semibold transition ${
+                  activeTab === tab.id
+                    ? "border-emerald-300 bg-emerald-50 text-emerald-700"
+                    : "border-slate-200 bg-white text-slate-600 hover:border-slate-300"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
+        {resolvedTool?.id ? (
+          <ToolFavoriteButton toolId={resolvedTool.id} toolTitle={resolvedTool.title} size="sm" />
+        ) : null}
       </div>
 
-      <div className={activeTab === "calculator" ? "space-y-6" : "hidden"}>{children}</div>
+      {shouldShowMissingNote ? missingDocsCallout : null}
+
+      <div className={activeTab === "calculator" ? "space-y-6" : "hidden"}>
+        {children}
+        <PremiumCTA variant="compact" />
+      </div>
 
       <section className={activeTab === "explanation" ? "rounded-2xl border border-slate-200 bg-white p-6 shadow-sm" : "hidden"}>
         <div className="space-y-4">
           <h2 className="text-lg font-semibold text-slate-900">{copy.explanationTitle}</h2>
-          {loading ? <p className="text-sm text-slate-500">{copy.loadingExplanation}</p> : null}
-          {error ? <p className="text-sm text-rose-600">{error}</p> : null}
-          {!loading && !error && docs?.explanation ? (
-            <div className="mdx-content space-y-6">
-              <MDXClient source={docs.explanation} />
-            </div>
-          ) : null}
-          {!loading && !error && !docs?.explanation ? (
-            <Callout type="info" title={copy.explanationTitle}>
-              {copy.examplesEmptyBody}
-            </Callout>
-          ) : null}
+          {renderExplanation()}
         </div>
       </section>
 

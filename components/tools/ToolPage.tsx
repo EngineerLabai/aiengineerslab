@@ -1,15 +1,17 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ComponentProps } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import PageShell from "@/components/layout/PageShell";
 import ToolDocTabs from "@/components/tools/ToolDocTabs";
+import ComparePanel from "@/components/tools/ComparePanel";
 import ToolHistory from "@/components/tools/ToolHistory";
 import type { ToolDefinition } from "@/tools/_shared/types";
 import { trackEvent } from "@/utils/analytics";
 
 type ToolPageProps<TInput, TResult> = {
   tool: ToolDefinition<TInput, TResult>;
+  initialDocs?: ComponentProps<typeof ToolDocTabs>["initialDocs"];
 };
 
 const safeDecode = <TInput,>(value: string | null): TInput | null => {
@@ -30,7 +32,7 @@ const safeEncode = <TInput,>(value: TInput) => {
   }
 };
 
-export default function ToolPage<TInput, TResult>({ tool }: ToolPageProps<TInput, TResult>) {
+export default function ToolPage<TInput, TResult>({ tool, initialDocs }: ToolPageProps<TInput, TResult>) {
   const [input, setInput] = useState<TInput>(tool.initialInput);
   const result = useMemo(() => tool.calculate(input), [input, tool]);
   const searchParams = useSearchParams();
@@ -108,14 +110,15 @@ export default function ToolPage<TInput, TResult>({ tool }: ToolPageProps<TInput
   const InputSection = tool.InputSection;
   const ResultSection = tool.ResultSection;
   const VisualizationSection = tool.VisualizationSection;
+  const CompareVisualizationSection = tool.CompareVisualizationSection;
 
   return (
     <PageShell>
-      <ToolDocTabs slug={tool.id}>
+      <ToolDocTabs slug={tool.id} initialDocs={initialDocs}>
         <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <div className="space-y-2">
             <p className="inline-flex items-center rounded-full bg-slate-900 px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">
-              Hesaplama Araci
+              Hesaplayici
             </p>
             <h1 className="text-lg font-semibold text-slate-900">{tool.title}</h1>
             <p className="text-sm text-slate-600">{tool.description}</p>
@@ -134,6 +137,16 @@ export default function ToolPage<TInput, TResult>({ tool }: ToolPageProps<TInput
         <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <VisualizationSection input={input} result={result} />
         </section>
+
+        <ComparePanel
+          toolId={tool.id}
+          initialInput={tool.initialInput}
+          baseInput={input}
+          calculate={tool.calculate}
+          InputSection={InputSection}
+          compareMetrics={tool.compareMetrics}
+          CompareVisualizationSection={CompareVisualizationSection}
+        />
 
         <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <ToolHistory toolId={tool.id} toolTitle={tool.title} input={input} result={result} />

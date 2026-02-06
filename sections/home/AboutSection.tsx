@@ -1,36 +1,12 @@
 import type { Locale } from "@/utils/locale";
+import { getMessages } from "@/utils/messages";
 
 type AboutSectionProps = {
   locale: Locale;
 };
 
 export default function AboutSection({ locale }: AboutSectionProps) {
-  const copy =
-    locale === "en"
-      ? {
-          kicker: "About",
-          title: "AI is not a tool here; it is a mindset.",
-          lead:
-            "There is no AI integration on this platform. AI is positioned as thinking and methodology; calculations stay manual and visually supported.",
-          cardOneTitle: "Thinking / Guidance",
-          cardOneBody:
-            "AI helps break down problems, ask the right questions, and choose the method.",
-          cardTwoTitle: "Manual + Visual",
-          cardTwoBody:
-            "Results are produced with manual math, formulas, and visual explanations so the process stays readable.",
-        }
-      : {
-          kicker: "Hakkinda",
-          title: "AI burada arac degil, yaklasimdir.",
-          lead:
-            "Bu platformda AI entegrasyonu yok. AI, dusunce ve metodoloji olarak konumlanir; hesaplamalar ise manuel ve gorsel destekli ilerler.",
-          cardOneTitle: "Dusunce / Yonlendirme",
-          cardOneBody:
-            "AI, problemi parcalama, sorulari dogru sorma ve metodoloji secimi icin yol gosterir.",
-          cardTwoTitle: "Manuel + Gorsel",
-          cardTwoBody:
-            "Sonuclar; manuel hesap, formuller ve gorsel anlatimla uretilir. Bu sayede surec okunur kalir.",
-        };
+  const copy = getMessages(locale).home.about;
 
   return (
     <section id="about" className="relative z-10 px-4 pb-16 md:px-10 lg:px-16">

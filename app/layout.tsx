@@ -1,66 +1,97 @@
 ﻿// app/layout.tsx
-import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Inter, JetBrains_Mono, Sora } from "next/font/google";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 import AnalyticsTracker from "@/components/analytics/AnalyticsTracker";
 import CustomCursor from "@/components/effects/CustomCursor";
 import { LocaleProvider } from "@/components/i18n/LocaleProvider";
 import SiteShell from "@/components/layout/SiteShell";
 import JsonLd from "@/components/seo/JsonLd";
+import { getBrandCopy } from "@/config/brand";
 import { getLocaleFromCookies } from "@/utils/locale-server";
-import { SITE_URL, buildCanonical } from "@/utils/seo";
+import { SITE_URL } from "@/utils/seo";
+import { buildPageMetadata } from "@/utils/metadata";
 import "../styles/globals.css";
 
-const spaceGrotesk = Space_Grotesk({
+const sora = Sora({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
+  variable: "--font-display",
   display: "swap",
-  weight: ["300", "500", "700"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
+  variable: "--font-mono",
   display: "swap",
   weight: ["400", "600", "700"],
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: "Yapay Zeka Muhendisleri Laboratuvari",
-  description: "Gelecegi kodluyoruz.",
-  alternates: {
-    canonical: buildCanonical("/") ?? "/",
-  },
-  openGraph: {
-    title: "Yapay Zeka Muhendisleri Laboratuvari",
-    description: "Gelecegi kodluyoruz.",
-    type: "website",
-    siteName: "AI Engineers Lab",
-    url: "/",
-    locale: "tr_TR",
-  },
-  twitter: {
-    card: "summary",
-    title: "Yapay Zeka Muhendisleri Laboratuvari",
-    description: "Gelecegi kodluyoruz.",
-  },
-};
+export async function generateMetadata() {
+  const locale = await getLocaleFromCookies();
+  const brandContent = getBrandCopy(locale);
 
-const WEBSITE_JSON_LD = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: "AI Engineers Lab",
-  url: SITE_URL,
-  description: "Gelecegi kodluyoruz.",
-  inLanguage: "tr-TR",
-  potentialAction: {
-    "@type": "SearchAction",
-    target: `${SITE_URL}/blog?q={search_term_string}`,
-    "query-input": "required name=search_term_string",
-  },
-};
+  const base = buildPageMetadata({
+    title: brandContent.siteName,
+    description: brandContent.description,
+    path: "/",
+    locale,
+    openGraph: {
+      siteName: brandContent.siteName,
+    },
+  });
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    ...base,
+  };
+}
+
+const LOGO_URL = new URL("/brand/logo-mark.svg", SITE_URL).toString();
+
+async function getWebsiteJsonLd() {
+  const locale = await getLocaleFromCookies();
+  const brandContent = getBrandCopy(locale);
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${SITE_URL}#organization`,
+        name: brandContent.siteName,
+        url: SITE_URL,
+        logo: {
+          "@type": "ImageObject",
+          url: LOGO_URL,
+        },
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}#website`,
+        name: brandContent.siteName,
+        url: SITE_URL,
+        description: brandContent.description,
+        inLanguage: locale === "tr" ? "tr-TR" : "en-US",
+        publisher: {
+          "@id": `${SITE_URL}#organization`,
+        },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: `${SITE_URL}/blog?q={search_term_string}`,
+          "query-input": "required name=search_term_string",
+        },
+      },
+    ],
+  };
+}
 
 export default async function RootLayout({
   children,
@@ -68,10 +99,11 @@ export default async function RootLayout({
   children: ReactNode;
 }>) {
   const locale = await getLocaleFromCookies();
+  const websiteJsonLd = await getWebsiteJsonLd();
   return (
     <html lang={locale}>
-      <body className={`${spaceGrotesk.variable} ${jetBrainsMono.variable} font-sans antialiased bg-neutral-950 text-white`}>
-        <JsonLd data={WEBSITE_JSON_LD} />
+      <body className={`${sora.variable} ${inter.variable} ${jetBrainsMono.variable} font-sans antialiased bg-slate-50 text-slate-900`}>
+        <JsonLd data={websiteJsonLd} />
         <LocaleProvider initialLocale={locale}>
           <AuthProvider>
             <AnalyticsTracker />
